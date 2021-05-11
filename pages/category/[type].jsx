@@ -1,4 +1,3 @@
-import { GetStaticProps, GetStaticPaths } from 'next'
 import Products from '../../components/Products'
 
 function ProductPage({ products, type, cart, setCart, favorites, setFavorites }) {
@@ -24,7 +23,7 @@ function ProductPage({ products, type, cart, setCart, favorites, setFavorites })
   )
 }
 
-export const getStaticPaths: GetStaticPaths = async () => {
+export const getStaticPaths = async () => {
   const res = await fetch(`http://makeup-api.herokuapp.com/api/v1/products.json`)
   const products = await res.json();
   
@@ -40,7 +39,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
   }
 }
 
-export const getStaticProps: GetStaticProps = async ({ params }) => {
+export const getStaticProps = async ({ params }) => {
   const res = await fetch(`http://makeup-api.herokuapp.com/api/v1/products.json?product_type=${params.type}`)
   const products = await res.json()
   
