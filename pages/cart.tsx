@@ -1,7 +1,8 @@
 import React from 'react'
 import Image from 'next/image'
+import { IProduct } from '../types/types';
 
- const Cart = ({ cart }) => (
+ const Cart = ({ cart }: {cart: Array<IProduct>}) => (
     <>
       <section>
         {cart.length ? <h1>Cart</h1> : <h1>Your cart is empty</h1>}

@@ -1,8 +1,9 @@
+import { AppProps } from 'next/app'
 import React, { useState } from 'react'
 import '../styles/globals.css'
 import Layout from '../Layout/Layout'
 
-function App({ Component, pageProps }) {
+function App({ Component, pageProps }: AppProps) {
   const [favorites, setFavorites] = useState([]);
   const [cart, setCart] = useState([]);
   return (
