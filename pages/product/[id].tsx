@@ -1,8 +1,16 @@
 import Image from 'next/image'
 import { GetStaticProps, GetStaticPaths } from 'next'
 import styles from './id.module.scss'
+import { IProduct } from '../../types/types';
+import { Dispatch, SetStateAction } from 'react';
 
-function ProductPage({ product, cart, setCart, favorites, setFavorites }) {
+const ProductPage = ({ product, cart, setCart, favorites, setFavorites }:{
+  product: IProduct,
+  cart: Array<IProduct>,
+  setCart: Dispatch<SetStateAction<IProduct[]>>,
+  favorites: Array<IProduct>,
+  setFavorites: Dispatch<SetStateAction<IProduct[]>>
+}) => {
   
   const { id, api_featured_image, brand, name, description, rating, price, price_sign, product_colors } = product;
 

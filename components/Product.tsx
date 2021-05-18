@@ -1,9 +1,16 @@
-import React from 'react'
+import React, { Dispatch, SetStateAction } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import styles from './products.module.scss'
+import { IProduct } from '../types/types'
 
-export default function Product({ product, cart, setCart, favorites, setFavorites }){
+const Product = ({ product, cart, setCart, favorites, setFavorites }:{
+  product: IProduct,
+  cart: Array<IProduct>,
+  setCart: Dispatch<SetStateAction<IProduct[]>>,
+  favorites: Array<IProduct>,
+  setFavorites: Dispatch<SetStateAction<IProduct[]>>
+}) => {
   const { id, api_featured_image, brand, name, price, price_sign, product_colors } = product;
 
   const handleClick = () => {
@@ -75,3 +82,5 @@ export default function Product({ product, cart, setCart, favorites, setFavorite
     </div>
   );
 }
+
+export default Product;

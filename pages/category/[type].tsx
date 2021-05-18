@@ -1,6 +1,17 @@
+import { Dispatch, SetStateAction } from 'react'
+import { GetStaticProps, GetStaticPaths } from 'next'
 import Products from '../../components/Products'
+import { IProduct } from '../../types/types'
 
-function ProductPage({ products, type, cart, setCart, favorites, setFavorites }) {
+const ProductPage = ({ products, type, cart, setCart, favorites, setFavorites }:{
+  products: Array<IProduct>,
+  type: string,
+  cart: Array<IProduct>,
+  setCart: Dispatch<SetStateAction<IProduct[]>>,
+  favorites: Array<IProduct>,
+  setFavorites: Dispatch<SetStateAction<IProduct[]>>
+
+}) => {
   return (
     <>
       <h2>{type}</h2>
@@ -23,7 +34,7 @@ function ProductPage({ products, type, cart, setCart, favorites, setFavorites })
   )
 }
 
-export const getStaticPaths = async () => {
+export const getStaticPaths: GetStaticPaths = async () => {
   const res = await fetch(`http://makeup-api.herokuapp.com/api/v1/products.json`)
   const products = await res.json();
   
@@ -31,7 +42,7 @@ export const getStaticPaths = async () => {
     params: { type: product.product_type },
   }));
 
-  const paths = Array.from(new Set(allPaths.map(JSON.stringify))).map(JSON.parse);
+  const paths = Array.from(new Set(allPaths.map(JSON.stringify))).map((i:string) => JSON.parse(i));
 
   return {
     paths,
@@ -39,7 +50,7 @@ export const getStaticPaths = async () => {
   }
 }
 
-export const getStaticProps = async ({ params }) => {
+export const getStaticProps: GetStaticProps = async ({ params }) => {
   const res = await fetch(`http://makeup-api.herokuapp.com/api/v1/products.json?product_type=${params.type}`)
   const products = await res.json()
   

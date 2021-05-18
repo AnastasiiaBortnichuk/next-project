@@ -1,55 +1,61 @@
-import React from 'react'
+import React, { Dispatch, SetStateAction } from 'react'
 import Link from 'next/link'
 import Products from '../components/Products'
 import { GetStaticProps } from 'next'
+import { IProduct } from '../types/types'
 
 
-export default function Eyes({ mascara, eyeliner, eyeshadow, brands, cart, setCart, favorites, setFavorites }) {
-
-  return (
-    <>
-      <Link href={'/category/mascara'}>
-        <a><h2>Mascara</h2>view all</a>
-      </Link>
-      <Products 
-        products={mascara.slice(0, 10)} 
-        favorites={favorites}
-        setFavorites={setFavorites}
-        cart={cart}
-        setCart={setCart}
-      />
-      <br/>
-      <Link href={'/category/eyeliner'}>
-        <a><h2>Eyeliner</h2>view all</a>
-      </Link>
-       <Products 
-        products={eyeliner.slice(0, 10)} 
-        favorites={favorites}
-        setFavorites={setFavorites}
-        cart={cart}
-        setCart={setCart}
-      />
-      <br/>
-      <Link href={'/category/eyeshadow'}>
-        <a><h2>Eyeshadow</h2>view all</a>
-      </Link>
-      <Products 
-        products={eyeshadow.slice(0, 10)} 
-        favorites={favorites}
-        setFavorites={setFavorites}
-        cart={cart}
-        setCart={setCart}
-      />
-      <style jsx>{`
-        a {
-          display: inline-block;
-          margin-left: 100px;
-          font-size: 20px;
-        }
-      `}</style>
-    </>
-  )
-}
+const Eyes = ({ mascara, eyeliner, eyeshadow, cart, setCart, favorites, setFavorites }:{
+  mascara: Array<IProduct>,
+  eyeliner: Array<IProduct>,
+  eyeshadow: Array<IProduct>,
+  cart: Array<IProduct>,
+  setCart: Dispatch<SetStateAction<IProduct[]>>,
+  favorites: Array<IProduct>,
+  setFavorites: Dispatch<SetStateAction<IProduct[]>>
+}) => (
+  <>
+    <Link href={'/category/mascara'}>
+      <a><h2>Mascara</h2>view all</a>
+    </Link>
+    <Products 
+      products={mascara.slice(0, 10)} 
+      favorites={favorites}
+      setFavorites={setFavorites}
+      cart={cart}
+      setCart={setCart}
+    />
+    <br/>
+    <Link href={'/category/eyeliner'}>
+      <a><h2>Eyeliner</h2>view all</a>
+    </Link>
+    <Products 
+      products={eyeliner.slice(0, 10)} 
+      favorites={favorites}
+      setFavorites={setFavorites}
+      cart={cart}
+      setCart={setCart}
+    />
+    <br/>
+    <Link href={'/category/eyeshadow'}>
+      <a><h2>Eyeshadow</h2>view all</a>
+    </Link>
+    <Products 
+      products={eyeshadow.slice(0, 10)} 
+      favorites={favorites}
+      setFavorites={setFavorites}
+      cart={cart}
+      setCart={setCart}
+    />
+    <style jsx>{`
+      a {
+        display: inline-block;
+        margin-left: 100px;
+        font-size: 20px;
+      }
+    `}</style>
+  </>
+)
 
 export const getStaticProps: GetStaticProps = async() => {
   const res = await fetch("http://makeup-api.herokuapp.com/api/v1/products.json?product_type=mascara")
@@ -69,3 +75,5 @@ export const getStaticProps: GetStaticProps = async() => {
     },
   }
 }
+
+export default Eyes;

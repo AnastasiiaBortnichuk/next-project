@@ -1,10 +1,18 @@
-import React, { useState, useMemo } from 'react'
+import React, { useState, useMemo, SetStateAction, Dispatch } from 'react'
 import Products from '../components/Products'
 import { GetStaticProps } from 'next'
 import styles from './filters.module.scss'
+import { IProduct } from '../types/types'
 
 
-export default function Catalog({ products, brands, cart, setCart, favorites, setFavorites }) {
+const Catalog = ({ products, brands, cart, setCart, favorites, setFavorites }:{
+  products: Array<IProduct>,
+  brands: Array<string>,
+  cart: Array<IProduct>,
+  setCart: Dispatch<SetStateAction<IProduct[]>>,
+  favorites: Array<IProduct>,
+  setFavorites: Dispatch<SetStateAction<IProduct[]>>
+}) => {
 
   const [query, setQuery] = useState('');
   const [filterBrand, setBrand] = useState();
@@ -49,7 +57,6 @@ export default function Catalog({ products, brands, cart, setCart, favorites, se
             (brand && <option value={brand} id={brand}>{brand}</option>)
             )}
           </select>
-
         </div>
         <div className={styles.filter_group}>
           <div className={styles.search}>
@@ -61,9 +68,7 @@ export default function Catalog({ products, brands, cart, setCart, favorites, se
               onChange={handleSearch}
             />
           </div>
-          
         </div>
-
       </div>
       <h2 className={styles.title}>All our products</h2>
       <Products 
@@ -90,3 +95,5 @@ export const getStaticProps: GetStaticProps = async() => {
     },
   }
 }
+
+export default Catalog;
