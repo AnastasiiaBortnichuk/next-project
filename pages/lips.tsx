@@ -1,63 +1,45 @@
-import React, { Dispatch, SetStateAction } from 'react'
-import Link from 'next/link'
-import Products from '../components/Products'
-import { GetStaticProps } from 'next'
-import { IProduct } from '../types/types'
+import { GetStaticProps } from 'next';
+import ProductsSection from '../components/ProductsSection';
+import { ComponentProps, IProduct } from '../types/types';
+import { BASE_URL } from '../types/constants';
 
+interface ILipsProducts extends ComponentProps {
+  lipstick: Array<IProduct>;
+  lip_liner: Array<IProduct>; //this variable has a name with a bottom space because it must match the value of the product category that comes in response to the request
+}
 
-const Lips = ({ lipstick, lip_liner, cart, setCart, favorites, setFavorites }:{
-  lipstick: Array<IProduct>,
-  lip_liner: Array<IProduct>,
-  cart: Array<IProduct>,
-  setCart: Dispatch<SetStateAction<IProduct[]>>,
-  favorites: Array<IProduct>,
-  setFavorites: Dispatch<SetStateAction<IProduct[]>>
-}) => (
-  <>
-    <Link href={'/category/lipstick'}>
-      <a><h2>Lipstick</h2>view all</a>
-    </Link>
-    <Products 
-      products={lipstick.slice(0, 10)} 
+const LIPS_PRODUCTS = ['lipstick', 'lip_liner'];
+
+const Lips = ({ lipstick, lip_liner, cart, setCart, favorites, setFavorites }: ILipsProducts) => {
+  const productProps = {
+    lipstick,
+    lip_liner,
+  };
+  return (
+    <ProductsSection
+      products={LIPS_PRODUCTS}
+      productProps={productProps}
       favorites={favorites}
       setFavorites={setFavorites}
       cart={cart}
       setCart={setCart}
     />
-    <br/>
-    <Link href={'/category/lip_liner'}>
-      <a><h2>Lip liner</h2>view all</a>
-    </Link>
-    <Products 
-      products={lip_liner.slice(0, 10)} 
-      favorites={favorites}
-      setFavorites={setFavorites}
-      cart={cart}
-      setCart={setCart}
-    />
-    <style jsx>{`
-      a {
-        display: inline-block;
-        margin-left: 100px;
-        font-size: 20px;
-      }
-    `}</style>
-  </>
-)
+  );
+};
 
-export const getStaticProps: GetStaticProps = async() => {
-  const res = await fetch("http://makeup-api.herokuapp.com/api/v1/products.json?product_type=lipstick")
-  const lipstick = await res.json();
+export const getStaticProps: GetStaticProps = async () => {
+  const lipstickResponse = await fetch(`${BASE_URL}?product_type=lipstick`);
+  const lipstick = await lipstickResponse.json();
 
-  const res2 = await fetch("http://makeup-api.herokuapp.com/api/v1/products.json?product_type=lip_liner")
-  const lip_liner = await res2.json();
- 
+  const liplinerResponse = await fetch(`${BASE_URL}?product_type=lip_liner`);
+  const lip_liner = await liplinerResponse.json();
+
   return {
     props: {
       lipstick,
-      lip_liner
+      lip_liner,
     },
-  }
-}
+  };
+};
 
 export default Lips;

@@ -1,22 +1,22 @@
-import { AppProps } from 'next/app'
-import React, { useState } from 'react'
-import '../styles/globals.css'
-import Layout from '../Layout/Layout'
+import { AppProps } from 'next/app';
+import { useState } from 'react';
+import Layout from '../Layout/Layout';
+import '../styles/globals.scss';
 
-function App({ Component, pageProps }: AppProps) {
+const App = ({ Component, pageProps }: AppProps): JSX.Element => {
   const [favorites, setFavorites] = useState([]);
   const [cart, setCart] = useState([]);
   return (
     <Layout>
-      <Component 
-        {...pageProps} 
+      <Component
+        {...pageProps}
         favorites={favorites}
         setFavorites={setFavorites}
         cart={cart}
         setCart={setCart}
       />
     </Layout>
-  ) 
-}
+  );
+};
 
-export default App
+export default App;

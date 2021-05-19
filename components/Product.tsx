@@ -1,86 +1,82 @@
-import React, { Dispatch, SetStateAction } from 'react'
-import Image from 'next/image'
-import Link from 'next/link'
-import styles from './products.module.scss'
-import { IProduct } from '../types/types'
+import Image from 'next/image';
+import Link from 'next/link';
+import { ProductComponentProps } from '../types/types';
+import styles from '../styles/products.module.scss';
 
-const Product = ({ product, cart, setCart, favorites, setFavorites }:{
-  product: IProduct,
-  cart: Array<IProduct>,
-  setCart: Dispatch<SetStateAction<IProduct[]>>,
-  favorites: Array<IProduct>,
-  setFavorites: Dispatch<SetStateAction<IProduct[]>>
-}) => {
+const Product = ({
+  product,
+  cart,
+  setCart,
+  favorites,
+  setFavorites,
+}: ProductComponentProps): JSX.Element => {
   const { id, api_featured_image, brand, name, price, price_sign, product_colors } = product;
 
-  const handleClick = () => {
+  const handleClick = (prop, setProp) => {
     if (favorites.length === 0) {
-      setFavorites([product]);
+      setProp([product]);
     } else {
-      setFavorites(
-        favorites.some(item => item.id === id)
-          ? [...favorites.filter(item => item.id !== id)]
-          : [...favorites, product]
+      setProp(
+        prop.some((item) => item.id === id)
+          ? [...prop.filter((item) => item.id !== id)]
+          : [...prop, product]
       );
     }
   };
 
-  const handleAddCart = () => {
-    if (cart.length === 0) {
-      setCart([product]);
-    } else {
-      setCart(
-        cart.some(item => item.id === id)
-          ? [...cart.filter(item => item.id !== id)]
-          : [...cart, product]
-      );
-    }
-  };
+  const getClassName = cart.some((purchase) => purchase.id === id)
+    ? styles.button_buy__active
+    : styles.button_buy;
+
+  const getButtonTitle = cart.some((purchase) => purchase.id === id)
+    ? 'Added to cart'
+    : 'Add to cart';
+
+  const getIcon = favorites.some((item) => item.id === id)
+    ? '/filledHeartLike.svg'
+    : '/heartLike.svg';
 
   return (
     <div className={styles.product}>
       <Link href={`/product/${id}`}>
         <a className={styles.product_container}>
-            <Image 
-              src={`http:${api_featured_image}`}
-              width={210}
-              height={210}
-              className={styles.image}
-            />
-            <h3 className={styles.brand}>{brand}</h3>
-            <p>{name}</p>
-            <p>{price}<span>{price_sign}</span></p>
-            <div className={styles.colors}>
-              {product_colors.slice(0, 30).map((col, i) => (
-                <div className={styles.color} style={{ background: `${col.hex_value}` }} key={`${col.hex_value}-${i}`}></div>
-              ))}
-            </div>
-        </a>  
+          <Image
+            src={`http:${api_featured_image}`}
+            width={210}
+            height={210}
+            className={styles.image}
+          />
+          <h3 className={styles.brand}>{brand}</h3>
+          <p>{name}</p>
+          <p>
+            {price}
+            <span>{price_sign}</span>
+          </p>
+          <ul className={styles.colors}>
+            {product_colors.slice(0, 30).map((col, i) => (
+              <li
+                className={styles.color}
+                style={{ background: `${col.hex_value}` }}
+                key={`${col.hex_value}-${i}`}
+              />
+            ))}
+          </ul>
+        </a>
       </Link>
       <div className={styles.button}>
-        <button
-          type="button"
-          className={
-            cart.some(purchase => purchase.id === id)
-              ? styles.button_buy__active
-              : styles.button_buy
-          }
-          onClick={handleAddCart}
-        >
-          {cart.some(purchase => purchase.id === id)
-            ? 'Added to cart'
-            : 'Add to cart'}
+        <button type="submit" className={getClassName} onClick={() => handleClick(cart, setCart)}>
+          {getButtonTitle}
         </button>
-        <button type="button" className={styles.button_like} onClick={handleClick}>
-          {favorites.some(item => item.id === id) ? (
-            <img src="/FilledHeartLike.svg" alt="heart icon" />
-          ) : (
-            <img src="/HeartLike.svg" alt="heart icon" />
-          )}
+        <button
+          type="submit"
+          className={styles.button_like}
+          onClick={() => handleClick(favorites, setFavorites)}
+        >
+          <img src={getIcon} alt="heart icon" />
         </button>
       </div>
     </div>
   );
-}
+};
 
 export default Product;
