@@ -1,12 +1,12 @@
 import React from 'react';
 import Image from 'next/image';
-import { IProduct } from '../types/types';
+import { IProduct } from '../shared';
 import styles from '../styles/cart.module.scss';
 
 const CART_TITLE = 'Cart';
 const EMPTY_CART = 'Your cart is empty';
 
-const Cart = ({ cart }: { cart: Array<IProduct> }): JSX.Element => {
+const Cart = ({ cart }: { cart: IProduct[] }): JSX.Element => {
   const getTotal = cart.length
     ? cart.map((product) => Number(product.price)).reduce((a, b) => a + b)
     : '0';

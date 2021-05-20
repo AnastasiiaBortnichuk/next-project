@@ -2,12 +2,12 @@ import { GetStaticProps } from 'next';
 import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
-import { BASE_URL } from '../types/constants';
+import { BASE_URL, IProduct, updateTitle } from '../shared';
 import styles from '../styles/home.module.scss';
 
 const CATEGORIES = ['face', 'brows', 'lips', 'nails', 'eyes'];
 
-const Home = ({ types }: { types: Array<string> }): JSX.Element => (
+const Home = ({ types }: { types: string[] }): JSX.Element => (
   <>
     <Head>
       <title>MakeUp</title>
@@ -34,7 +34,7 @@ const Home = ({ types }: { types: Array<string> }): JSX.Element => (
       <div>
         {types.map((type) => (
           <Link href={`/category/${type}`} key={type}>
-            <a className={styles.link}> {type?.replace(/_/g, ' ')} </a>
+            <a className={styles.link}>{updateTitle(type)}</a>
           </Link>
         ))}
       </div>
@@ -48,7 +48,7 @@ export const getStaticProps: GetStaticProps = async () => {
   const res = await fetch(BASE_URL);
   const products = await res.json();
 
-  const types = Array.from(new Set(products.map((product) => product.product_type)));
+  const types = Array.from(new Set(products.map((product: IProduct) => product.product_type)));
 
   return {
     props: {

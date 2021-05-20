@@ -1,7 +1,15 @@
 import { GetStaticProps, GetStaticPaths } from 'next';
 import Image from 'next/image';
-import { ProductComponentProps } from '../../types/types';
-import { BASE_URL } from '../../types/constants';
+import {
+  ADDED,
+  ADD_TO,
+  BASE_URL,
+  FILLED_HEART,
+  EMPTY_HEART,
+  handleClick,
+  isAdded,
+  ProductComponentProps,
+} from '../../shared';
 import styles from '../../styles/id.module.scss';
 
 const ProductPage = ({
@@ -23,29 +31,11 @@ const ProductPage = ({
     product_colors,
   } = product;
 
-  const handleClick = (prop, setProp) => {
-    if (favorites.length === 0) {
-      setProp([product]);
-    } else {
-      setProp(
-        prop.some((item) => item.id === id)
-          ? [...prop.filter((item) => item.id !== id)]
-          : [...prop, product]
-      );
-    }
-  };
+  const setClassName = isAdded(cart, id) ? styles.button_buy__active : styles.button_buy;
 
-  const getClassName = cart.some((purchase) => purchase.id === id)
-    ? styles.button_buy__active
-    : styles.button_buy;
+  const setButtonTitle = isAdded(cart, id) ? ADDED : ADD_TO;
 
-  const getButtonTitle = cart.some((purchase) => purchase.id === id)
-    ? 'Added to cart'
-    : 'Add to cart';
-
-  const getIcon = favorites.some((item) => item.id === id)
-    ? '/filledHeartLike.svg'
-    : '/heartLike.svg';
+  const setIcon = isAdded(favorites, id) ? FILLED_HEART : EMPTY_HEART;
 
   return (
     <>
@@ -65,17 +55,17 @@ const ProductPage = ({
           <div className={styles.button}>
             <button
               type="submit"
-              className={getClassName}
-              onClick={() => handleClick(cart, setCart)}
+              className={setClassName}
+              onClick={() => handleClick(cart, setCart, product, id)}
             >
-              {getButtonTitle}
+              {setButtonTitle}
             </button>
             <button
               type="submit"
               className={styles.button_like}
-              onClick={() => handleClick(favorites, setFavorites)}
+              onClick={() => handleClick(favorites, setFavorites, product, id)}
             >
-              <img src={getIcon} alt="heart icon" />
+              <img src={setIcon} alt="heart icon" />
             </button>
           </div>
         </div>

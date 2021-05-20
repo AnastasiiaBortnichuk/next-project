@@ -1,36 +1,26 @@
 import Link from 'next/link';
 import Products from '../components/Products';
-import { ComponentProps } from '../types/types';
+import { ComponentProps, ProductTypes, updateTitle } from '../shared';
 import styles from '../styles/products.module.scss';
 
 interface IProductsSection extends ComponentProps {
-  products: Array<string>;
-  productProps: any;
+  products: string[];
+  productProps: ProductTypes;
 }
 
-const ProductsSection = ({
-  products,
-  productProps,
-  cart,
-  setCart,
-  favorites,
-  setFavorites,
-}: IProductsSection) => (
+const CLICK = 'click to view all';
+
+const ProductsSection = ({ products, productProps, ...prop }: IProductsSection) => (
   <>
     {products.map((product) => (
       <section className={styles.product__section} key={product}>
         <Link href={`/category/${product}`}>
           <a className={styles.link}>
-            <span className={styles.title}>{product}</span> click to view all
+            <span className={styles.title}>{updateTitle(product)}</span>
+            {CLICK}
           </a>
         </Link>
-        <Products
-          products={productProps[product].slice(0, 10)}
-          favorites={favorites}
-          setFavorites={setFavorites}
-          cart={cart}
-          setCart={setCart}
-        />
+        <Products products={productProps[product].slice(0, 10)} {...prop} />
       </section>
     ))}
   </>

@@ -1,7 +1,6 @@
 import { GetStaticProps } from 'next';
 import Products from '../components/Products';
-import { ProductsProps } from '../types/types';
-import { BASE_URL } from '../types/constants';
+import { fetchData, ProductsProps } from '../shared';
 import styles from '../styles/products.module.scss';
 
 const Nails = (props: ProductsProps) => (
@@ -12,8 +11,7 @@ const Nails = (props: ProductsProps) => (
 );
 
 export const getStaticProps: GetStaticProps = async () => {
-  const res = await fetch(`${BASE_URL}?product_type=nail_polish`);
-  const products = await res.json();
+  const products = await fetchData('nail_polish');
 
   return {
     props: {

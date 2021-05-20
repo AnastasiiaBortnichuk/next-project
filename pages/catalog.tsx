@@ -1,13 +1,12 @@
 import { useState, useMemo } from 'react';
 import { GetStaticProps } from 'next';
 import Products from '../components/Products';
-import { IProduct, ComponentProps } from '../types/types';
-import { BASE_URL } from '../types/constants';
+import { BASE_URL, IProduct, ComponentProps } from '../shared';
 import styles from '../styles/filters.module.scss';
 
 interface CatalogProps extends ComponentProps {
-  products: Array<IProduct>;
-  brands: Array<string>;
+  products: IProduct[];
+  brands: string[];
 }
 
 const Catalog = ({
@@ -38,7 +37,7 @@ const Catalog = ({
     switch (filterBrand) {
       case 'all':
       case undefined:
-      case null: //"null" value may come in response from request
+      case null: //"null" and "undefined" value may come in response from request
         return searchedProducts;
       default:
         return [...searchedProducts].filter((product) => product.brand === filterBrand);

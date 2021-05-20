@@ -1,6 +1,14 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { ProductComponentProps } from '../types/types';
+import {
+  ADDED,
+  ADD_TO,
+  FILLED_HEART,
+  EMPTY_HEART,
+  handleClick,
+  isAdded,
+  ProductComponentProps,
+} from '../shared';
 import styles from '../styles/products.module.scss';
 
 const Product = ({
@@ -12,29 +20,11 @@ const Product = ({
 }: ProductComponentProps): JSX.Element => {
   const { id, api_featured_image, brand, name, price, price_sign, product_colors } = product;
 
-  const handleClick = (prop, setProp) => {
-    if (favorites.length === 0) {
-      setProp([product]);
-    } else {
-      setProp(
-        prop.some((item) => item.id === id)
-          ? [...prop.filter((item) => item.id !== id)]
-          : [...prop, product]
-      );
-    }
-  };
+  const setClassName = isAdded(cart, id) ? styles.button_buy__active : styles.button_buy;
 
-  const getClassName = cart.some((purchase) => purchase.id === id)
-    ? styles.button_buy__active
-    : styles.button_buy;
+  const setButtonTitle = isAdded(cart, id) ? ADDED : ADD_TO;
 
-  const getButtonTitle = cart.some((purchase) => purchase.id === id)
-    ? 'Added to cart'
-    : 'Add to cart';
-
-  const getIcon = favorites.some((item) => item.id === id)
-    ? '/filledHeartLike.svg'
-    : '/heartLike.svg';
+  const setIcon = isAdded(favorites, id) ? FILLED_HEART : EMPTY_HEART;
 
   return (
     <div className={styles.product}>
@@ -64,15 +54,19 @@ const Product = ({
         </a>
       </Link>
       <div className={styles.button}>
-        <button type="submit" className={getClassName} onClick={() => handleClick(cart, setCart)}>
-          {getButtonTitle}
+        <button
+          type="submit"
+          className={setClassName}
+          onClick={() => handleClick(cart, setCart, product, id)}
+        >
+          {setButtonTitle}
         </button>
         <button
           type="submit"
           className={styles.button_like}
-          onClick={() => handleClick(favorites, setFavorites)}
+          onClick={() => handleClick(favorites, setFavorites, product, id)}
         >
-          <img src={getIcon} alt="heart icon" />
+          <img src={setIcon} alt="heart icon" />
         </button>
       </div>
     </div>

@@ -12,16 +12,16 @@ export interface IProduct {
   price: string;
   price_sign: string | null;
   product_api_url: string;
-  product_colors: Array<{ hex_value: string; colour_name: string }>;
+  product_colors: { hex_value: string; colour_name: string }[];
   product_link: string;
   product_type: string;
   rating: number | null;
 }
 
 export interface ComponentProps {
-  cart: Array<IProduct>;
+  cart: IProduct[];
   setCart: Dispatch<SetStateAction<IProduct[]>>;
-  favorites: Array<IProduct>;
+  favorites: IProduct[];
   setFavorites: Dispatch<SetStateAction<IProduct[]>>;
 }
 
@@ -30,6 +30,17 @@ export interface ProductComponentProps extends ComponentProps {
 }
 
 export interface ProductsProps extends ComponentProps {
-  products: Array<IProduct>;
+  products: IProduct[];
   type?: string;
+}
+
+export interface ProductTypes {
+  mascara?: IProduct[];
+  eyeliner?: IProduct[];
+  eyeshadow?: IProduct[];
+  blush?: IProduct[];
+  bronzer?: IProduct[];
+  foundation?: IProduct[];
+  lipstick?: IProduct[];
+  lip_liner?: IProduct[]; //this variable has a name with a bottom space because it must match the value of the product category that comes in response to the request
 }

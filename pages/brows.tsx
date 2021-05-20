@@ -1,7 +1,6 @@
 import { GetStaticProps } from 'next';
 import Products from '../components/Products';
-import { ProductsProps } from '../types/types';
-import { BASE_URL } from '../types/constants';
+import { fetchData, ProductsProps } from '../shared';
 import styles from '../styles/products.module.scss';
 
 const Brows = (props: ProductsProps): JSX.Element => (
@@ -12,8 +11,7 @@ const Brows = (props: ProductsProps): JSX.Element => (
 );
 
 export const getStaticProps: GetStaticProps = async () => {
-  const res = await fetch(`${BASE_URL}?product_type=eyebrow`);
-  const products = await res.json();
+  const products = await fetchData('eyebrow');
 
   return {
     props: {
