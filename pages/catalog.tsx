@@ -1,32 +1,24 @@
-import { useState, useMemo } from 'react';
+import React, { useState, useMemo, Dispatch } from 'react';
 import { GetStaticProps } from 'next';
 import Products from '../components/Products';
-import { BASE_URL, IProduct, ComponentProps } from '../shared';
-import styles from '../styles/filters.module.scss';
+import { BASE_URL, IProduct, IComponentProps } from '../shared';
+import styles from '../styles/catalog.module.scss';
 
-interface CatalogProps extends ComponentProps {
+interface ICatalogProps extends IComponentProps {
   products: IProduct[];
   brands: string[];
 }
 
-const Catalog = ({
-  products,
-  brands,
-  cart,
-  setCart,
-  favorites,
-  setFavorites,
-}: CatalogProps): JSX.Element => {
+const Catalog = ({ products, brands, ...props }: ICatalogProps): JSX.Element => {
   const [query, setQuery] = useState('');
-  const [filterBrand, setBrand] = useState();
+  const [filterBrand, setBrand] = useState<string | undefined>();
 
-  const handleSearch = (event): void => {
-    setQuery(event.target.value);
-  };
-
-  const handleChoose = (event): void => {
-    setBrand(event.target.value);
-  };
+  const handleChange =
+    (setState: Dispatch<string>) =>
+    (event: React.ChangeEvent<EventTarget>): void => {
+      let target = event.target as HTMLInputElement | HTMLSelectElement;
+      setState(target.value);
+    };
 
   const searchedProducts = useMemo(
     () => products.filter((product) => product.name.toLowerCase().includes(query.toLowerCase())),
@@ -36,8 +28,8 @@ const Catalog = ({
   const productsByBrand = useMemo(() => {
     switch (filterBrand) {
       case 'all':
-      case undefined:
-      case null: //"null" and "undefined" value may come in response from request
+      case undefined: //"null" and "undefined" value may come in response from request
+      case null:
         return searchedProducts;
       default:
         return [...searchedProducts].filter((product) => product.brand === filterBrand);
@@ -49,7 +41,7 @@ const Catalog = ({
       <div className={styles.filter}>
         <div className={styles.filter_group}>
           <p className={styles.selection}>Sort by</p>
-          <select className={styles.options} onBlur={handleChoose}>
+          <select className={styles.options} onBlur={handleChange(setBrand)}>
             <option value="all">choose brand</option>
             {brands.map(
               (brand) =>
@@ -68,19 +60,13 @@ const Catalog = ({
               type="search"
               value={query}
               placeholder="Search by name"
-              onChange={handleSearch}
+              onChange={handleChange(setQuery)}
             />
           </div>
         </div>
       </div>
-      <h2 className={styles.title}>All our products</h2>
-      <Products
-        products={productsByBrand}
-        favorites={favorites}
-        setFavorites={setFavorites}
-        cart={cart}
-        setCart={setCart}
-      />
+      <p className={styles.title}>All our products</p>
+      <Products products={productsByBrand} {...props} />
     </>
   );
 };
@@ -89,7 +75,7 @@ export const getStaticProps: GetStaticProps = async () => {
   const res = await fetch(BASE_URL);
   const products = await res.json();
 
-  const brands = Array.from(new Set(products.map((product) => product.brand).sort()));
+  const brands = Array.from(new Set(products.map((product: IProduct) => product.brand).sort()));
 
   return {
     props: {

@@ -8,7 +8,7 @@ import {
   EMPTY_HEART,
   handleClick,
   isAdded,
-  ProductComponentProps,
+  IProductComponentProps,
 } from '../../shared';
 import styles from '../../styles/id.module.scss';
 
@@ -18,7 +18,7 @@ const ProductPage = ({
   setCart,
   favorites,
   setFavorites,
-}: ProductComponentProps): JSX.Element => {
+}: IProductComponentProps): JSX.Element => {
   const {
     id,
     api_featured_image,
@@ -39,7 +39,7 @@ const ProductPage = ({
 
   return (
     <>
-      <h2 className={styles.name}>{name}</h2>
+      <p className={styles.name}>{name}</p>
       <div className={styles.container}>
         <div className={styles.container_box}>
           <Image
@@ -56,33 +56,34 @@ const ProductPage = ({
             <button
               type="submit"
               className={setClassName}
-              onClick={() => handleClick(cart, setCart, product, id)}
+              onClick={handleClick(cart, setCart, product, id)}
             >
               {setButtonTitle}
             </button>
             <button
               type="submit"
               className={styles.button_like}
-              onClick={() => handleClick(favorites, setFavorites, product, id)}
+              onClick={handleClick(favorites, setFavorites, product, id)}
             >
               <img src={setIcon} alt="heart icon" />
             </button>
           </div>
         </div>
         <div className={styles.container_box}>
-          <h3 className={styles.brand}>Brand: {brand}</h3>
+          <p className={styles.brand}>Brand: {brand}</p>
           <p className={styles.text}>{description}</p>
           <p className={styles.text}>Star rating:{rating ? rating : ' unrated'} </p>
         </div>
       </div>
-      <div className={styles.colors}>
-        {product_colors.map((col) => (
-          <div className={styles.colors_box} key={col.colour_name}>
-            <div className={styles.color} style={{ background: `${col.hex_value}` }}></div>
-            <div className={styles.text}>{col.colour_name}</div>
-          </div>
+      <ul className={styles.colors}>
+        {product_colors.map(({ colour_name, hex_value }) => (
+          <li className={styles.colors_box} key={colour_name}>
+            {/*in-line style is using because hex value comes from API*/}
+            <div className={styles.color} style={{ background: `${hex_value}` }} />
+            <div className={styles.text}>{colour_name}</div>
+          </li>
         ))}
-      </div>
+      </ul>
     </>
   );
 };

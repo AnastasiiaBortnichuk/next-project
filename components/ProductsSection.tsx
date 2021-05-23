@@ -1,16 +1,16 @@
 import Link from 'next/link';
 import Products from '../components/Products';
-import { ComponentProps, ProductTypes, updateTitle } from '../shared';
+import { IComponentProps, IProductTypes, updateTitle } from '../shared';
 import styles from '../styles/products.module.scss';
 
-interface IProductsSection extends ComponentProps {
+interface IProductsSection extends IComponentProps {
   products: string[];
-  productProps: ProductTypes;
+  productProps: IProductTypes;
 }
 
 const CLICK = 'click to view all';
 
-const ProductsSection = ({ products, productProps, ...prop }: IProductsSection) => (
+const ProductsSection = ({ products, productProps, ...prop }: IProductsSection): JSX.Element => (
   <>
     {products.map((product) => (
       <section className={styles.product__section} key={product}>

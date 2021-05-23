@@ -39,8 +39,6 @@ const Home = ({ types }: { types: string[] }): JSX.Element => (
         ))}
       </div>
     </main>
-
-    <footer className={styles.footer}></footer>
   </>
 );
 

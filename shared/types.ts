@@ -18,23 +18,23 @@ export interface IProduct {
   rating: number | null;
 }
 
-export interface ComponentProps {
+export interface IComponentProps {
   cart: IProduct[];
   setCart: Dispatch<SetStateAction<IProduct[]>>;
   favorites: IProduct[];
   setFavorites: Dispatch<SetStateAction<IProduct[]>>;
 }
 
-export interface ProductComponentProps extends ComponentProps {
+export interface IProductComponentProps extends IComponentProps {
   product: IProduct;
 }
 
-export interface ProductsProps extends ComponentProps {
+export interface IProductsProps extends IComponentProps {
   products: IProduct[];
   type?: string;
 }
 
-export interface ProductTypes {
+export interface IProductTypes {
   mascara?: IProduct[];
   eyeliner?: IProduct[];
   eyeshadow?: IProduct[];
@@ -42,5 +42,7 @@ export interface ProductTypes {
   bronzer?: IProduct[];
   foundation?: IProduct[];
   lipstick?: IProduct[];
-  lip_liner?: IProduct[]; //this variable has a name with a bottom space because it must match the value of the product category that comes in response to the request
+  //this variable has a name with a bottom space because it must match
+  //the value of the product category that comes in response to the request
+  lip_liner?: IProduct[];
 }

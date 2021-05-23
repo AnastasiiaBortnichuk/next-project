@@ -2,9 +2,9 @@ import Image from 'next/image';
 import Link from 'next/link';
 import styles from '../styles/header.module.scss';
 
-const HEADER_LINKS = ['catalog', 'face', 'eyes', 'lips', 'brows', 'nails', 'cart', 'favorites'];
+const MENU_ITEMS = ['catalog', 'face', 'eyes', 'lips', 'brows', 'nails', 'cart', 'favorites'];
 
-const Header: React.FC = () => (
+const Header = (): JSX.Element => (
   <header className={styles.headerContainer}>
     <Link href="/">
       <a>
@@ -12,13 +12,11 @@ const Header: React.FC = () => (
       </a>
     </Link>
     <nav className={styles.nav}>
-      <div className={styles.navList}>
-        {HEADER_LINKS.map((link) => (
-          <Link href={`/${link}`} key={link}>
-            <a className={styles.link}>{link}</a>
-          </Link>
-        ))}
-      </div>
+      {MENU_ITEMS.map((item) => (
+        <Link href={`/${item}`} key={item}>
+          <a className={styles.link}>{item}</a>
+        </Link>
+      ))}
     </nav>
   </header>
 );

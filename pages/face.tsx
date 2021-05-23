@@ -1,8 +1,8 @@
 import { GetStaticProps } from 'next';
 import ProductsSection from '../components/ProductsSection';
-import { ComponentProps, IProduct, fetchData } from '../shared';
+import { IComponentProps, IProduct, fetchData } from '../shared';
 
-interface IFaceProducts extends ComponentProps {
+interface IFaceProducts extends IComponentProps {
   blush: IProduct[];
   bronzer: IProduct[];
   foundation: IProduct[];
@@ -10,12 +10,13 @@ interface IFaceProducts extends ComponentProps {
 
 const FACE_PRODUCTS = ['blush', 'bronzer', 'foundation'];
 
-const Face = ({ blush, bronzer, foundation, ...props }: IFaceProducts) => {
+const Face = ({ blush, bronzer, foundation, ...props }: IFaceProducts): JSX.Element => {
   const productProps = {
     blush,
     bronzer,
     foundation,
   };
+
   return <ProductsSection products={FACE_PRODUCTS} productProps={productProps} {...props} />;
 };
 

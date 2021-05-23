@@ -1,11 +1,12 @@
 import Products from '../components/Products';
-import { ComponentProps, IProduct } from '../shared';
+import { IComponentProps, IProduct } from '../shared';
 
 const FAVORITES_TITLE = 'You liked these products';
 const NO_FAVORITES_TITLE = 'Nothing was added to favorites';
 
-const Favorites = (props: ComponentProps): JSX.Element => {
-  const setTitle = (props: IProduct[]) => (props.length ? FAVORITES_TITLE : NO_FAVORITES_TITLE);
+const Favorites = (props: IComponentProps): JSX.Element => {
+  const setTitle = (props: IProduct[]): string =>
+    props.length ? FAVORITES_TITLE : NO_FAVORITES_TITLE;
 
   return (
     <>

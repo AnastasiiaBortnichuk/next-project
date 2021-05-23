@@ -7,7 +7,7 @@ import {
   EMPTY_HEART,
   handleClick,
   isAdded,
-  ProductComponentProps,
+  IProductComponentProps,
 } from '../shared';
 import styles from '../styles/products.module.scss';
 
@@ -17,7 +17,7 @@ const Product = ({
   setCart,
   favorites,
   setFavorites,
-}: ProductComponentProps): JSX.Element => {
+}: IProductComponentProps): JSX.Element => {
   const { id, api_featured_image, brand, name, price, price_sign, product_colors } = product;
 
   const setClassName = isAdded(cart, id) ? styles.button_buy__active : styles.button_buy;
@@ -36,18 +36,19 @@ const Product = ({
             height={210}
             className={styles.image}
           />
-          <h3 className={styles.brand}>{brand}</h3>
+          <p className={styles.brand}>{brand}</p>
           <p>{name}</p>
           <p>
             {price}
             <span>{price_sign}</span>
           </p>
           <ul className={styles.colors}>
-            {product_colors.slice(0, 30).map((col, i) => (
+            {product_colors.slice(0, 30).map((color, i) => (
               <li
                 className={styles.color}
-                style={{ background: `${col.hex_value}` }}
-                key={`${col.hex_value}-${i}`}
+                //in-line style is using because hex value comes from API
+                style={{ background: `${color.hex_value}` }}
+                key={`${color.hex_value}-${i}`}
               />
             ))}
           </ul>
@@ -57,14 +58,14 @@ const Product = ({
         <button
           type="submit"
           className={setClassName}
-          onClick={() => handleClick(cart, setCart, product, id)}
+          onClick={handleClick(cart, setCart, product, id)}
         >
           {setButtonTitle}
         </button>
         <button
           type="submit"
           className={styles.button_like}
-          onClick={() => handleClick(favorites, setFavorites, product, id)}
+          onClick={handleClick(favorites, setFavorites, product, id)}
         >
           <img src={setIcon} alt="heart icon" />
         </button>

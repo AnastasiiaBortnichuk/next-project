@@ -1,11 +1,11 @@
 import { GetStaticProps } from 'next';
 import Products from '../components/Products';
-import { fetchData, ProductsProps } from '../shared';
+import { fetchData, IProductsProps } from '../shared';
 import styles from '../styles/products.module.scss';
 
-const Brows = (props: ProductsProps): JSX.Element => (
+const Brows = (props: IProductsProps): JSX.Element => (
   <>
-    <h2 className={styles.title}>Eyebrows</h2>
+    <p className={styles.title}>Eyebrows</p>
     <Products {...props} />
   </>
 );

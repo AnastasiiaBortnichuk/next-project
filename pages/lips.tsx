@@ -1,29 +1,23 @@
 import { GetStaticProps } from 'next';
 import ProductsSection from '../components/ProductsSection';
-import { ComponentProps, IProduct, fetchData } from '../shared';
+import { IComponentProps, IProduct, fetchData } from '../shared';
 
-interface ILipsProducts extends ComponentProps {
+interface ILipsProducts extends IComponentProps {
   lipstick: IProduct[];
-  lip_liner: IProduct[]; //this variable has a name with a bottom space because it must match the value of the product category that comes in response to the request
+  //this variable has a name with a bottom space because it must match
+  //the value of the product category that comes in response to the request
+  lip_liner: IProduct[];
 }
 
 const LIPS_PRODUCTS = ['lipstick', 'lip_liner'];
 
-const Lips = ({ lipstick, lip_liner, cart, setCart, favorites, setFavorites }: ILipsProducts) => {
+const Lips = ({ lipstick, lip_liner, ...props }: ILipsProducts): JSX.Element => {
   const productProps = {
     lipstick,
     lip_liner,
   };
-  return (
-    <ProductsSection
-      products={LIPS_PRODUCTS}
-      productProps={productProps}
-      favorites={favorites}
-      setFavorites={setFavorites}
-      cart={cart}
-      setCart={setCart}
-    />
-  );
+
+  return <ProductsSection products={LIPS_PRODUCTS} productProps={productProps} {...props} />;
 };
 
 export const getStaticProps: GetStaticProps = async () => {

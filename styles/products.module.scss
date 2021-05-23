@@ -15,6 +15,7 @@
   
   background: #fff;
   transition: all 2s;
+
   &:hover {
     box-shadow: 0 3px 13px rgba(23, 32, 49, 0.26);
   }
@@ -57,8 +58,11 @@
 }
 
 .brand {
-  text-transform: capitalize;
   margin: 20px auto;
+  font-size: 1.2rem;
+  font-weight: bold;
+  text-transform: capitalize;
+  font-weight: bold;
 }
 
 .colors {
@@ -87,21 +91,23 @@
 
   &_buy {
     height: 40px;
-    width: 176px;
+    width: 180px;
     background: #d45ba8;
     color: #fff;
     border: 1px solid #d45ba8;
     transition: all 1s;
-    font-size: 18px;
+    font-size: 1rem;
+
     &:hover {
       box-shadow: 0 3px 13px rgba(23, 32, 49, 0.26);
     }
+    
     &__active {
       border: 1px solid #e2e6e9;
-      color: gray;
+      color: #afb9c8;
       background-color: #fff;
       height: 40px;
-      width: 176px;
+      width: 180px;
       transition: all 1s;
     }
   }
