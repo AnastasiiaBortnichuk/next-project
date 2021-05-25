@@ -11,24 +11,26 @@ const Cart = ({ cart }: { cart: IProduct[] }): JSX.Element => {
     ? cart.map((product) => Number(product.price)).reduce((a, b) => a + b)
     : '0';
 
+  const { cart_container, details, image, product, title, total } = styles;
+
   return (
-    <div className={styles.cart}>
-      <p className={styles.title}>{cart.length ? CART_TITLE : EMPTY_CART}</p>
+    <div className={cart_container}>
+      <h2 className={title}>{cart.length ? CART_TITLE : EMPTY_CART}</h2>
       {cart.map(({ id, api_featured_image, name, brand, price }) => (
-        <div className={styles.product} key={id}>
+        <div className={product} key={id}>
           <Image
             src={`http:${api_featured_image}`}
             width={210}
             height={210}
             alt={name}
-            className={styles.image}
+            className={image}
           />
-          <p className={styles.details}>{brand}</p>
-          <p className={styles.details}>{name}</p>
-          <p className={styles.details}>{price}</p>
+          <p className={details}>{brand}</p>
+          <p className={details}>{name}</p>
+          <p className={details}>{price}</p>
         </div>
       ))}
-      <p className={styles.total}>Total: {Count}</p>
+      <p className={total}>Total: {Count}</p>
     </div>
   );
 };

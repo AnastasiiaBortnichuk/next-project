@@ -10,20 +10,28 @@ interface IProductsSection extends IComponentProps {
 
 const CLICK = 'click to view all';
 
-const ProductsSection = ({ products, productProps, ...prop }: IProductsSection): JSX.Element => (
-  <>
-    {products.map((product) => (
-      <section className={styles.product__section} key={product}>
-        <Link href={`/category/${product}`}>
-          <a className={styles.link}>
-            <span className={styles.title}>{updateTitle(product)}</span>
-            {CLICK}
-          </a>
-        </Link>
-        <Products products={productProps[product].slice(0, 10)} {...prop} />
-      </section>
-    ))}
-  </>
-);
+const ProductsSection = ({
+  products,
+  productProps,
+  ...prop
+}: IProductsSection): JSX.Element => {
+  const { link, products__section, title } = styles;
+
+  return (
+    <>
+      {products.map((product) => (
+        <section className={products__section} key={product}>
+          <Link href={`/category/${product}`}>
+            <a className={link}>
+              <span className={title}>{updateTitle(product)}</span>
+              {CLICK}
+            </a>
+          </Link>
+          <Products products={productProps[product].slice(0, 10)} {...prop} />
+        </section>
+      ))}
+    </>
+  );
+};
 
 export default ProductsSection;

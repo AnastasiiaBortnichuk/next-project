@@ -5,7 +5,7 @@ import styles from '../styles/products.module.scss';
 
 const Brows = (props: IProductsProps): JSX.Element => (
   <>
-    <p className={styles.title}>Eyebrows</p>
+    <h2 className={styles.title}>Eyebrows</h2>
     <Products {...props} />
   </>
 );

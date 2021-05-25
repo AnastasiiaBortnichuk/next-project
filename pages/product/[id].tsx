@@ -9,8 +9,9 @@ import {
   handleClick,
   isAdded,
   IProductComponentProps,
+  IProduct,
 } from '../../shared';
-import styles from '../../styles/id.module.scss';
+import styles from '../../styles/products.module.scss';
 
 const ProductPage = ({
   product,
@@ -31,7 +32,23 @@ const ProductPage = ({
     product_colors,
   } = product;
 
-  const setClassName = isAdded(cart, id) ? styles.button_buy__active : styles.button_buy;
+  const {
+    brand_title,
+    button,
+    button_buy,
+    button_buy__active,
+    button_like,
+    color_rectangle,
+    colors_box,
+    colors_detailed,
+    container,
+    container_box,
+    image,
+    product_name,
+    text,
+  } = styles;
+
+  const setClassName = isAdded(cart, id) ? button_buy__active : button_buy;
 
   const setButtonTitle = isAdded(cart, id) ? ADDED : ADD_TO;
 
@@ -39,20 +56,20 @@ const ProductPage = ({
 
   return (
     <>
-      <p className={styles.name}>{name}</p>
-      <div className={styles.container}>
-        <div className={styles.container_box}>
+      <p className={product_name}>{name}</p>
+      <div className={container}>
+        <div className={container_box}>
           <Image
             src={`http:${api_featured_image}`}
             width={320}
             height={320}
-            className={styles.image}
+            className={image}
           />
-          <p className={styles.text}>
+          <p className={text}>
             Price: {price}
             <span>{price_sign}</span>
           </p>
-          <div className={styles.button}>
+          <div className={button}>
             <button
               type="submit"
               className={setClassName}
@@ -62,25 +79,28 @@ const ProductPage = ({
             </button>
             <button
               type="submit"
-              className={styles.button_like}
+              className={button_like}
               onClick={handleClick(favorites, setFavorites, product, id)}
             >
               <img src={setIcon} alt="heart icon" />
             </button>
           </div>
         </div>
-        <div className={styles.container_box}>
-          <p className={styles.brand}>Brand: {brand}</p>
-          <p className={styles.text}>{description}</p>
-          <p className={styles.text}>Star rating:{rating ? rating : ' unrated'} </p>
+        <div className={container_box}>
+          <p className={brand_title}>Brand: {brand}</p>
+          <p className={text}>{description}</p>
+          <p className={text}>Star rating:{rating ? rating : ' unrated'} </p>
         </div>
       </div>
-      <ul className={styles.colors}>
+      <ul className={colors_detailed}>
         {product_colors.map(({ colour_name, hex_value }) => (
-          <li className={styles.colors_box} key={colour_name}>
+          <li className={colors_box} key={colour_name}>
             {/*in-line style is using because hex value comes from API*/}
-            <div className={styles.color} style={{ background: `${hex_value}` }} />
-            <div className={styles.text}>{colour_name}</div>
+            <div
+              className={color_rectangle}
+              style={{ background: `${hex_value}` }}
+            />
+            <div className={text}>{colour_name}</div>
           </li>
         ))}
       </ul>
@@ -103,7 +123,9 @@ export const getStaticPaths: GetStaticPaths = async () => {
 };
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
-  const res = await fetch(`http://makeup-api.herokuapp.com/api/v1/products/${params.id}.json`);
+  const res = await fetch(
+    `http://makeup-api.herokuapp.com/api/v1/products/${params.id}.json`
+  );
   const product = await res.json();
 
   return {

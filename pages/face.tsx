@@ -10,14 +10,25 @@ interface IFaceProducts extends IComponentProps {
 
 const FACE_PRODUCTS = ['blush', 'bronzer', 'foundation'];
 
-const Face = ({ blush, bronzer, foundation, ...props }: IFaceProducts): JSX.Element => {
+const Face = ({
+  blush,
+  bronzer,
+  foundation,
+  ...props
+}: IFaceProducts): JSX.Element => {
   const productProps = {
     blush,
     bronzer,
     foundation,
   };
 
-  return <ProductsSection products={FACE_PRODUCTS} productProps={productProps} {...props} />;
+  return (
+    <ProductsSection
+      products={FACE_PRODUCTS}
+      productProps={productProps}
+      {...props}
+    />
+  );
 };
 
 export const getStaticProps: GetStaticProps = async () => {

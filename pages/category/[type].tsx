@@ -1,6 +1,12 @@
 import { GetStaticProps, GetStaticPaths } from 'next';
 import Products from '../../components/Products';
-import { BASE_URL, IProductsProps, fetchData, updateTitle, IProduct } from '../../shared';
+import {
+  BASE_URL,
+  IProductsProps,
+  fetchData,
+  updateTitle,
+  IProduct,
+} from '../../shared';
 import styles from '../../styles/products.module.scss';
 
 const ProductPage = (props: IProductsProps): JSX.Element => (
@@ -18,7 +24,9 @@ export const getStaticPaths: GetStaticPaths = async () => {
     params: { type: product.product_type },
   }));
 
-  const paths = Array.from(new Set(allPaths.map(JSON.stringify))).map((i: string) => JSON.parse(i));
+  const paths = Array.from(new Set(allPaths.map(JSON.stringify))).map(
+    (i: string) => JSON.parse(i)
+  );
 
   return {
     paths,

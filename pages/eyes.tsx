@@ -10,10 +10,21 @@ interface IEyesProducts extends IComponentProps {
 
 const EYES_PRODUCTS = ['mascara', 'eyeliner', 'eyeshadow'];
 
-const Eyes = ({ mascara, eyeliner, eyeshadow, ...props }: IEyesProducts): JSX.Element => {
+const Eyes = ({
+  mascara,
+  eyeliner,
+  eyeshadow,
+  ...props
+}: IEyesProducts): JSX.Element => {
   const productProps = { mascara, eyeliner, eyeshadow };
 
-  return <ProductsSection products={EYES_PRODUCTS} productProps={productProps} {...props} />;
+  return (
+    <ProductsSection
+      products={EYES_PRODUCTS}
+      productProps={productProps}
+      {...props}
+    />
+  );
 };
 
 export const getStaticProps: GetStaticProps = async () => {

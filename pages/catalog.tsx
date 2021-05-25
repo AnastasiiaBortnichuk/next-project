@@ -9,9 +9,23 @@ interface ICatalogProps extends IComponentProps {
   brands: string[];
 }
 
-const Catalog = ({ products, brands, ...props }: ICatalogProps): JSX.Element => {
+const Catalog = ({
+  products,
+  brands,
+  ...props
+}: ICatalogProps): JSX.Element => {
   const [query, setQuery] = useState('');
   const [filterBrand, setBrand] = useState<string | undefined>();
+
+  const {
+    filter,
+    filter_group,
+    options,
+    search,
+    search_input,
+    selection,
+    title,
+  } = styles;
 
   const handleChange =
     (setState: Dispatch<string>) =>
@@ -21,7 +35,10 @@ const Catalog = ({ products, brands, ...props }: ICatalogProps): JSX.Element => 
     };
 
   const searchedProducts = useMemo(
-    () => products.filter((product) => product.name.toLowerCase().includes(query.toLowerCase())),
+    () =>
+      products.filter((product) =>
+        product.name.toLowerCase().includes(query.toLowerCase())
+      ),
     [products, query]
   );
 
@@ -32,16 +49,18 @@ const Catalog = ({ products, brands, ...props }: ICatalogProps): JSX.Element => 
       case null:
         return searchedProducts;
       default:
-        return [...searchedProducts].filter((product) => product.brand === filterBrand);
+        return [...searchedProducts].filter(
+          (product) => product.brand === filterBrand
+        );
     }
   }, [searchedProducts, filterBrand]);
 
   return (
     <>
-      <div className={styles.filter}>
-        <div className={styles.filter_group}>
-          <p className={styles.selection}>Sort by</p>
-          <select className={styles.options} onBlur={handleChange(setBrand)}>
+      <div className={filter}>
+        <div className={filter_group}>
+          <p className={selection}>Sort by</p>
+          <select className={options} onBlur={handleChange(setBrand)}>
             <option value="all">choose brand</option>
             {brands.map(
               (brand) =>
@@ -53,10 +72,10 @@ const Catalog = ({ products, brands, ...props }: ICatalogProps): JSX.Element => 
             )}
           </select>
         </div>
-        <div className={styles.filter_group}>
-          <div className={styles.search}>
+        <div className={filter_group}>
+          <div className={search}>
             <input
-              className={styles.search_input}
+              className={search_input}
               type="search"
               value={query}
               placeholder="Search by name"
@@ -65,7 +84,7 @@ const Catalog = ({ products, brands, ...props }: ICatalogProps): JSX.Element => 
           </div>
         </div>
       </div>
-      <p className={styles.title}>All our products</p>
+      <h2 className={title}>All our products</h2>
       <Products products={productsByBrand} {...props} />
     </>
   );
@@ -75,7 +94,9 @@ export const getStaticProps: GetStaticProps = async () => {
   const res = await fetch(BASE_URL);
   const products = await res.json();
 
-  const brands = Array.from(new Set(products.map((product: IProduct) => product.brand).sort()));
+  const brands = Array.from(
+    new Set(products.map((product: IProduct) => product.brand).sort())
+  );
 
   return {
     props: {

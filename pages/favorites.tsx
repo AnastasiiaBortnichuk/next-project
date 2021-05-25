@@ -5,8 +5,8 @@ const FAVORITES_TITLE = 'You liked these products';
 const NO_FAVORITES_TITLE = 'Nothing was added to favorites';
 
 const Favorites = (props: IComponentProps): JSX.Element => {
-  const setTitle = (props: IProduct[]): string =>
-    props.length ? FAVORITES_TITLE : NO_FAVORITES_TITLE;
+  const setTitle = (favorites: IProduct[]): string =>
+    favorites.length ? FAVORITES_TITLE : NO_FAVORITES_TITLE;
 
   return (
     <>

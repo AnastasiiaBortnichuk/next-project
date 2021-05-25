@@ -5,7 +5,7 @@ import styles from '../styles/products.module.scss';
 
 const Nails = (props: IProductsProps): JSX.Element => (
   <>
-    <p className={styles.title}>Nail Polishes</p>
+    <h2 className={styles.title}>Nail Polishes</h2>
     <Products {...props} />
   </>
 );

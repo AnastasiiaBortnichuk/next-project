@@ -11,13 +11,23 @@ interface ILipsProducts extends IComponentProps {
 
 const LIPS_PRODUCTS = ['lipstick', 'lip_liner'];
 
-const Lips = ({ lipstick, lip_liner, ...props }: ILipsProducts): JSX.Element => {
+const Lips = ({
+  lipstick,
+  lip_liner,
+  ...props
+}: ILipsProducts): JSX.Element => {
   const productProps = {
     lipstick,
     lip_liner,
   };
 
-  return <ProductsSection products={LIPS_PRODUCTS} productProps={productProps} {...props} />;
+  return (
+    <ProductsSection
+      products={LIPS_PRODUCTS}
+      productProps={productProps}
+      {...props}
+    />
+  );
 };
 
 export const getStaticProps: GetStaticProps = async () => {
