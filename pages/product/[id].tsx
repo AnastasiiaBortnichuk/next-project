@@ -9,7 +9,6 @@ import {
   handleClick,
   isAdded,
   IProductComponentProps,
-  IProduct,
 } from '../../shared';
 import styles from '../../styles/products.module.scss';
 
