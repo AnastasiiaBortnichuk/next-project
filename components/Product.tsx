@@ -47,6 +47,38 @@ const Product = ({
 
   const Icon = isAdded(favorites, id) ? FILLED_HEART : EMPTY_HEART;
 
+  const Buttons = (): JSX.Element => (
+    <div className={button}>
+      <button
+        type="submit"
+        className={ClassName}
+        onClick={handleClick(cart, setCart, product, id)}
+      >
+        {ButtonTitle}
+      </button>
+      <button
+        type="submit"
+        className={button_like}
+        onClick={handleClick(favorites, setFavorites, product, id)}
+      >
+        <img src={Icon} alt="heart icon" />
+      </button>
+    </div>
+  );
+
+  const Colors = (): JSX.Element => (
+    <ul className={colors}>
+      {product_colors.slice(0, 30).map((color, i) => (
+        <li
+          className={color_circle}
+          //in-line style is using because hex value comes from API
+          style={{ background: `${color.hex_value}` }}
+          key={`${color.hex_value}-${i}`}
+        />
+      ))}
+    </ul>
+  );
+
   return (
     <div className={products}>
       <Link href={`/product/${id}`}>
@@ -63,35 +95,10 @@ const Product = ({
             {price}
             <span>{price_sign}</span>
           </p>
-          <ul className={colors}>
-            {product_colors.slice(0, 30).map((color, i) => (
-              <li
-                className={color_circle}
-                //in-line style is using because hex value comes from API
-                style={{ background: `${color.hex_value}` }}
-                key={`${color.hex_value}-${i}`}
-              />
-            ))}
-          </ul>
+          <Colors />
         </a>
       </Link>
-
-      <div className={button}>
-        <button
-          type="submit"
-          className={ClassName}
-          onClick={handleClick(cart, setCart, product, id)}
-        >
-          {ButtonTitle}
-        </button>
-        <button
-          type="submit"
-          className={button_like}
-          onClick={handleClick(favorites, setFavorites, product, id)}
-        >
-          <img src={Icon} alt="heart icon" />
-        </button>
-      </div>
+      <Buttons />
     </div>
   );
 };

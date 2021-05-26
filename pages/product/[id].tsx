@@ -53,6 +53,40 @@ const ProductPage = ({
 
   const Icon = isAdded(favorites, id) ? FILLED_HEART : EMPTY_HEART;
 
+  const Buttons = (): JSX.Element => (
+    <div className={button}>
+      <button
+        type="submit"
+        className={ClassName}
+        onClick={handleClick(cart, setCart, product, id)}
+      >
+        {ButtonTitle}
+      </button>
+      <button
+        type="submit"
+        className={button_like}
+        onClick={handleClick(favorites, setFavorites, product, id)}
+      >
+        <img src={Icon} alt="heart icon" />
+      </button>
+    </div>
+  );
+
+  const Colors = (): JSX.Element => (
+    <ul className={colors_detailed}>
+      {product_colors.map(({ colour_name, hex_value }) => (
+        <li className={colors_box} key={colour_name}>
+          <div
+            className={color_rectangle}
+            //in-line style is using because hex value comes from API
+            style={{ background: `${hex_value}` }}
+          />
+          <div className={text}>{colour_name}</div>
+        </li>
+      ))}
+    </ul>
+  );
+
   return (
     <>
       <p className={product_name}>{name}</p>
@@ -68,23 +102,9 @@ const ProductPage = ({
             Price: {price}
             <span>{price_sign}</span>
           </p>
-          <div className={button}>
-            <button
-              type="submit"
-              className={ClassName}
-              onClick={handleClick(cart, setCart, product, id)}
-            >
-              {ButtonTitle}
-            </button>
-            <button
-              type="submit"
-              className={button_like}
-              onClick={handleClick(favorites, setFavorites, product, id)}
-            >
-              <img src={Icon} alt="heart icon" />
-            </button>
-          </div>
+          <Buttons />
         </div>
+
         <div className={container_box}>
           <p className={brand_title}>Brand: {brand}</p>
           <p className={text}>{description}</p>
@@ -92,18 +112,7 @@ const ProductPage = ({
         </div>
       </div>
 
-      <ul className={colors_detailed}>
-        {product_colors.map(({ colour_name, hex_value }) => (
-          <li className={colors_box} key={colour_name}>
-            <div
-              className={color_rectangle}
-              //in-line style is using because hex value comes from API
-              style={{ background: `${hex_value}` }}
-            />
-            <div className={text}>{colour_name}</div>
-          </li>
-        ))}
-      </ul>
+      <Colors />
     </>
   );
 };

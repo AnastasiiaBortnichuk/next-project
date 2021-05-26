@@ -55,35 +55,39 @@ const Catalog = ({
     }
   }, [searchedProducts, filterBrand]);
 
-  return (
-    <>
-      <div className={filter}>
-        <div className={filter_group}>
-          <p className={selection}>Sort by</p>
-          <select className={options} onBlur={handleChange(setBrand)}>
-            <option value="all">choose brand</option>
-            {brands.map(
-              (brand) =>
-                brand && (
-                  <option value={brand} id={brand} key={brand}>
-                    {brand}
-                  </option>
-                )
-            )}
-          </select>
-        </div>
-        <div className={filter_group}>
-          <div className={search}>
-            <input
-              className={search_input}
-              type="search"
-              value={query}
-              placeholder="Search by name"
-              onChange={handleChange(setQuery)}
-            />
-          </div>
+  const Filter = (): JSX.Element => (
+    <div className={filter}>
+      <div className={filter_group}>
+        <p className={selection}>Sort by</p>
+        <select className={options} onBlur={handleChange(setBrand)}>
+          <option value="all">choose brand</option>
+          {brands.map(
+            (brand) =>
+              brand && (
+                <option value={brand} id={brand} key={brand}>
+                  {brand}
+                </option>
+              )
+          )}
+        </select>
+      </div>
+      <div className={filter_group}>
+        <div className={search}>
+          <input
+            className={search_input}
+            type="search"
+            value={query}
+            placeholder="Search by name"
+            onChange={handleChange(setQuery)}
+          />
         </div>
       </div>
+    </div>
+  );
+
+  return (
+    <>
+      <Filter />
       <h2 className={title}>All our products</h2>
       <Products products={productsByBrand} {...props} />
     </>
