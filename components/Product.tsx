@@ -41,11 +41,11 @@ const Product = ({
     products__container,
   } = styles;
 
-  const setClassName = isAdded(cart, id) ? button_buy__active : button_buy;
+  const ClassName = isAdded(cart, id) ? button_buy__active : button_buy;
 
-  const setButtonTitle = isAdded(cart, id) ? ADDED : ADD_TO;
+  const ButtonTitle = isAdded(cart, id) ? ADDED : ADD_TO;
 
-  const setIcon = isAdded(favorites, id) ? FILLED_HEART : EMPTY_HEART;
+  const Icon = isAdded(favorites, id) ? FILLED_HEART : EMPTY_HEART;
 
   return (
     <div className={products}>
@@ -75,20 +75,21 @@ const Product = ({
           </ul>
         </a>
       </Link>
+
       <div className={button}>
         <button
           type="submit"
-          className={setClassName}
+          className={ClassName}
           onClick={handleClick(cart, setCart, product, id)}
         >
-          {setButtonTitle}
+          {ButtonTitle}
         </button>
         <button
           type="submit"
           className={button_like}
           onClick={handleClick(favorites, setFavorites, product, id)}
         >
-          <img src={setIcon} alt="heart icon" />
+          <img src={Icon} alt="heart icon" />
         </button>
       </div>
     </div>

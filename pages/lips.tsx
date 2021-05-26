@@ -4,7 +4,7 @@ import { IComponentProps, IProduct, fetchData } from '../shared';
 
 interface ILipsProducts extends IComponentProps {
   lipstick: IProduct[];
-  //this variable has a name with a bottom space because it must match
+  //this variable has a name with underscore because it must match
   //the value of the product category that comes in response to the request
   lip_liner: IProduct[];
 }

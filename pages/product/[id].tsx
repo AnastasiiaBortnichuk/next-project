@@ -47,11 +47,11 @@ const ProductPage = ({
     text,
   } = styles;
 
-  const setClassName = isAdded(cart, id) ? button_buy__active : button_buy;
+  const ClassName = isAdded(cart, id) ? button_buy__active : button_buy;
 
-  const setButtonTitle = isAdded(cart, id) ? ADDED : ADD_TO;
+  const ButtonTitle = isAdded(cart, id) ? ADDED : ADD_TO;
 
-  const setIcon = isAdded(favorites, id) ? FILLED_HEART : EMPTY_HEART;
+  const Icon = isAdded(favorites, id) ? FILLED_HEART : EMPTY_HEART;
 
   return (
     <>
@@ -71,17 +71,17 @@ const ProductPage = ({
           <div className={button}>
             <button
               type="submit"
-              className={setClassName}
+              className={ClassName}
               onClick={handleClick(cart, setCart, product, id)}
             >
-              {setButtonTitle}
+              {ButtonTitle}
             </button>
             <button
               type="submit"
               className={button_like}
               onClick={handleClick(favorites, setFavorites, product, id)}
             >
-              <img src={setIcon} alt="heart icon" />
+              <img src={Icon} alt="heart icon" />
             </button>
           </div>
         </div>
@@ -91,12 +91,13 @@ const ProductPage = ({
           <p className={text}>Star rating:{rating ? rating : ' unrated'} </p>
         </div>
       </div>
+
       <ul className={colors_detailed}>
         {product_colors.map(({ colour_name, hex_value }) => (
           <li className={colors_box} key={colour_name}>
-            {/*in-line style is using because hex value comes from API*/}
             <div
               className={color_rectangle}
+              //in-line style is using because hex value comes from API
               style={{ background: `${hex_value}` }}
             />
             <div className={text}>{colour_name}</div>
