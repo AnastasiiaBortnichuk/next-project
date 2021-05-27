@@ -1,5 +1,5 @@
 import { Dispatch } from 'react';
-import { BASE_URL, URL_SEARCH } from './constants';
+import { BASE_JSON_URL, URL_SEARCH } from './constants';
 import { IProduct } from './types';
 
 export const handleClick =
@@ -30,6 +30,6 @@ export const updateTitle = (title: string): string => title.replace(/_/g, ' ');
 export const fetchData = async (
   param: string | string[]
 ): Promise<IProduct[]> => {
-  const res = await fetch(`${BASE_URL}${URL_SEARCH}${param}`);
+  const res = await fetch(`${BASE_JSON_URL}${URL_SEARCH}${param}`);
   return await res.json();
 };

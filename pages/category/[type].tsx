@@ -1,7 +1,7 @@
 import { GetStaticProps, GetStaticPaths } from 'next';
 import Products from '../../components/Products';
 import {
-  BASE_URL,
+  BASE_JSON_URL,
   IProductsProps,
   fetchData,
   updateTitle,
@@ -17,7 +17,7 @@ const ProductPage = (props: IProductsProps): JSX.Element => (
 );
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const res = await fetch(BASE_URL);
+  const res = await fetch(BASE_JSON_URL);
   const products = await res.json();
 
   const allPaths = products.map((product: IProduct) => ({

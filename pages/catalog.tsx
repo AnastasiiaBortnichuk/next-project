@@ -1,7 +1,7 @@
 import React, { useState, useMemo, Dispatch } from 'react';
 import { GetStaticProps } from 'next';
 import Products from '../components/Products';
-import { BASE_URL, IProduct, IComponentProps } from '../shared';
+import { BASE_JSON_URL, IProduct, IComponentProps } from '../shared';
 import styles from '../styles/catalog.module.scss';
 
 interface ICatalogProps extends IComponentProps {
@@ -95,7 +95,7 @@ const Catalog = ({
 };
 
 export const getStaticProps: GetStaticProps = async () => {
-  const res = await fetch(BASE_URL);
+  const res = await fetch(BASE_JSON_URL);
   const products = await res.json();
 
   const brands = Array.from(

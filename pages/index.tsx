@@ -2,7 +2,7 @@ import { GetStaticProps } from 'next';
 import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
-import { BASE_URL, updateTitle } from '../shared';
+import { BASE_JSON_URL, updateTitle } from '../shared';
 import styles from '../styles/home.module.scss';
 
 const CATEGORIES = ['face', 'brows', 'lips', 'nails', 'eyes'];
@@ -47,7 +47,7 @@ const Home = ({ types }: { types: string[] }): JSX.Element => {
 };
 
 export const getStaticProps: GetStaticProps = async () => {
-  const res = await fetch(BASE_URL);
+  const res = await fetch(BASE_JSON_URL);
   const products = await res.json();
 
   const types = Array.from(

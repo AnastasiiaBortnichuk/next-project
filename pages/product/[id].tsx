@@ -4,6 +4,7 @@ import {
   ADDED,
   ADD_TO,
   BASE_URL,
+  BASE_JSON_URL,
   FILLED_HEART,
   EMPTY_HEART,
   handleClick,
@@ -118,7 +119,7 @@ const ProductPage = ({
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const res = await fetch(BASE_URL);
+  const res = await fetch(BASE_JSON_URL);
   const products = await res.json();
 
   const paths = products.map((product) => ({
@@ -132,9 +133,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 };
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
-  const res = await fetch(
-    `http://makeup-api.herokuapp.com/api/v1/products/${params.id}.json`
-  );
+  const res = await fetch(`${BASE_URL}/${params.id}.json`);
   const product = await res.json();
 
   return {
