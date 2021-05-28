@@ -1,4 +1,4 @@
-import { GetStaticProps } from 'next';
+import { GetStaticProps, NextPage } from 'next';
 import ProductsSection from '../components/ProductsSection';
 import { IComponentProps, IProduct, fetchData } from '../shared';
 
@@ -11,15 +11,12 @@ interface ILipsProducts extends IComponentProps {
 
 const LIPS_PRODUCTS = ['lipstick', 'lip_liner'];
 
-const Lips = ({
+const LipsPage: NextPage<ILipsProducts> = ({
   lipstick,
   lip_liner,
   ...props
-}: ILipsProducts): JSX.Element => {
-  const productProps = {
-    lipstick,
-    lip_liner,
-  };
+}) => {
+  const productProps = { lipstick, lip_liner };
 
   return (
     <ProductsSection
@@ -42,4 +39,4 @@ export const getStaticProps: GetStaticProps = async () => {
   };
 };
 
-export default Lips;
+export default LipsPage;

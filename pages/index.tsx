@@ -1,4 +1,4 @@
-import { GetStaticProps } from 'next';
+import { GetStaticProps, NextPage } from 'next';
 import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -7,17 +7,16 @@ import styles from '../styles/home.module.scss';
 
 const CATEGORIES = ['face', 'brows', 'lips', 'nails', 'eyes'];
 
-const Home = ({ types }: { types: string[] }): JSX.Element => {
+const Home: NextPage<{ types: string[] }> = ({ types }) => {
   const { grid, link, main, title } = styles;
 
   return (
     <>
-      <Head>
-        <title>MakeUp</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
       <main className={main}>
+        <Head>
+          <title>MakeUp</title>
+          <link rel="icon" href="/favicon.ico" />
+        </Head>
         <h1 className={title}>Makeup</h1>
         <div className={grid}>
           {CATEGORIES.map((category) => (

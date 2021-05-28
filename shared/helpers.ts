@@ -27,9 +27,14 @@ export const isAdded = (list: IProduct[], id: number): boolean => {
 
 export const updateTitle = (title: string): string => title.replace(/_/g, ' ');
 
-export const fetchData = async (
-  param: string | string[]
-): Promise<IProduct[]> => {
+export const fetchData = async <T>(
+  url: string,
+  sort?: string,
+  param?: string
+): Promise<T> => {
   const res = await fetch(`${BASE_JSON_URL}${URL_SEARCH}${param}`);
   return await res.json();
 };
+
+const products = await fetchData<IProduct>('');
+const categories = await fetchData<ICategory>('');

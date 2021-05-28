@@ -7,9 +7,9 @@ const CART_TITLE = 'Cart';
 const EMPTY_CART = 'Your cart is empty';
 
 const Cart = ({ cart }: { cart: IProduct[] }): JSX.Element => {
-  const Count = cart.length
-    ? cart.map((product) => Number(product.price)).reduce((a, b) => a + b)
-    : '0';
+  const Count: number = cart.length
+    ? cart.map((product) => +product.price).reduce((a, b) => a + b)
+    : 0;
 
   const { cart_container, details, image, product, title, total } = styles;
 

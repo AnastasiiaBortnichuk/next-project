@@ -1,4 +1,5 @@
-import { GetStaticProps, GetStaticPaths } from 'next';
+import { FC } from 'react';
+import { GetStaticProps, GetStaticPaths, NextPage } from 'next';
 import Image from 'next/image';
 import {
   ADDED,
@@ -10,16 +11,14 @@ import {
   handleClick,
   isAdded,
   IProductComponentProps,
+  IProduct,
+  fetchData,
 } from '../../shared';
 import styles from '../../styles/products.module.scss';
 
-const ProductPage = ({
-  product,
-  cart,
-  setCart,
-  favorites,
-  setFavorites,
-}: IProductComponentProps): JSX.Element => {
+const ProductPage: NextPage<{
+  product: IProduct;
+}> = ({ product, cart, setCart, favorites, setFavorites }) => {
   const {
     id,
     api_featured_image,
@@ -48,32 +47,32 @@ const ProductPage = ({
     text,
   } = styles;
 
-  const ClassName = isAdded(cart, id) ? button_buy__active : button_buy;
+  const Buttons: FC = () => {
+    const ButtonTitle = isAdded(cart, id) ? ADDED : ADD_TO;
+    const ClassName = isAdded(cart, id) ? button_buy__active : button_buy;
+    const Icon = isAdded(favorites, id) ? FILLED_HEART : EMPTY_HEART;
 
-  const ButtonTitle = isAdded(cart, id) ? ADDED : ADD_TO;
+    return (
+      <div className={button}>
+        <button
+          type="submit"
+          className={ClassName}
+          onClick={handleClick(cart, setCart, product, id)}
+        >
+          {ButtonTitle}
+        </button>
+        <button
+          type="submit"
+          className={button_like}
+          onClick={handleClick(favorites, setFavorites, product, id)}
+        >
+          <img src={Icon} alt="heart icon" />
+        </button>
+      </div>
+    );
+  };
 
-  const Icon = isAdded(favorites, id) ? FILLED_HEART : EMPTY_HEART;
-
-  const Buttons = (): JSX.Element => (
-    <div className={button}>
-      <button
-        type="submit"
-        className={ClassName}
-        onClick={handleClick(cart, setCart, product, id)}
-      >
-        {ButtonTitle}
-      </button>
-      <button
-        type="submit"
-        className={button_like}
-        onClick={handleClick(favorites, setFavorites, product, id)}
-      >
-        <img src={Icon} alt="heart icon" />
-      </button>
-    </div>
-  );
-
-  const Colors = (): JSX.Element => (
+  const Colors: FC = () => (
     <ul className={colors_detailed}>
       {product_colors.map(({ colour_name, hex_value }) => (
         <li className={colors_box} key={colour_name}>
@@ -97,6 +96,7 @@ const ProductPage = ({
             src={`http:${api_featured_image}`}
             width={320}
             height={320}
+            layout="fixed"
             className={image}
           />
           <p className={text}>
@@ -119,11 +119,12 @@ const ProductPage = ({
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const res = await fetch(BASE_JSON_URL);
-  const products = await res.json();
+  // const res = await fetch(BASE_JSON_URL);
+  // const products = await res.json();
+  const products = await fetchData<IProduct[]>('/products');
 
-  const paths = products.map((product) => ({
-    params: { id: product.id.toString() },
+  const paths = products.map(({ id }) => ({
+    params: { id: `${id}` },
   }));
 
   return {
@@ -133,8 +134,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 };
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
-  const res = await fetch(`${BASE_URL}/${params.id}.json`);
-  const product = await res.json();
+  const product = await fetchData<IProduct>('/products');
 
   return {
     props: {

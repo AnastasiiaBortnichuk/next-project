@@ -1,6 +1,6 @@
 import React, { useState, useMemo, Dispatch } from 'react';
 import { GetStaticProps } from 'next';
-import Products from '../components/Products';
+import Products from '@components/Products';
 import { BASE_JSON_URL, IProduct, IComponentProps } from '../shared';
 import styles from '../styles/catalog.module.scss';
 

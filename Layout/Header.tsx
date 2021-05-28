@@ -1,19 +1,9 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import { FC } from 'react';
 import styles from '../styles/header.module.scss';
 
-const MENU_ITEMS = [
-  'catalog',
-  'face',
-  'eyes',
-  'lips',
-  'brows',
-  'nails',
-  'cart',
-  'favorites',
-];
-
-const Header = (): JSX.Element => {
+const Header: FC<{ items: string[] }> = ({ items }) => {
   const { headerContainer, link, nav } = styles;
 
   return (
@@ -24,7 +14,7 @@ const Header = (): JSX.Element => {
         </a>
       </Link>
       <nav className={nav}>
-        {MENU_ITEMS.map((item) => (
+        {items.map((item) => (
           <Link href={`/${item}`} key={item}>
             <a className={link}>{item}</a>
           </Link>

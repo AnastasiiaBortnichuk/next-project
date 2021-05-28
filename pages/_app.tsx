@@ -1,13 +1,18 @@
 import { AppProps } from 'next/app';
-import { useState } from 'react';
-import Layout from '../Layout/Layout';
+import { FC, useState } from 'react';
+import Layout from '@layout/Layout';
+
 import '../styles/globals.scss';
 
-const App = ({ Component, pageProps }: AppProps): JSX.Element => {
+const App: FC<AppProps> = ({ Component, pageProps }) => {
   const [favorites, setFavorites] = useState([]);
   const [cart, setCart] = useState([]);
   return (
-    <Layout>
+    <>
+      <Head>
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+      <Header items={MENU_ITEMS} />
       <Component
         {...pageProps}
         favorites={favorites}
@@ -15,7 +20,7 @@ const App = ({ Component, pageProps }: AppProps): JSX.Element => {
         cart={cart}
         setCart={setCart}
       />
-    </Layout>
+    </>
   );
 };
 
