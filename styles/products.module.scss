@@ -8,15 +8,33 @@
   margin: 40px;
 }
 
-.product {
+.container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+
+  &_box {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    max-width: 450px;
+  }
+}
+
+.products {
   display: flex;
   flex-direction: column;
   align-items: center;
   
   background: #fff;
   transition: all 2s;
+
   &:hover {
     box-shadow: 0 3px 13px rgba(23, 32, 49, 0.26);
+  }
+
+  &__section {
+    margin-top: 100px;
   }
 
   &__container {
@@ -30,6 +48,32 @@
   }
 }
 
+.title {
+  display: inline-block;
+  margin-left: 100px;
+  font-size: 1.5em;
+  font-weight: 600;
+  text-transform: capitalize;
+  padding-right: 10px;
+}
+
+.text {
+  font-size: 20px;
+  padding-left: 20px;
+}
+
+.link {
+  display: inline-block;
+  margin-left: 100px;
+  font-size: 20px;
+}
+
+.product_name {
+  text-align: center;
+  font-size: 2rem;
+  font-weight: bold;
+}
+
 .image {
   height: 210px;
   width: 210px;
@@ -38,8 +82,19 @@
 }
 
 .brand {
-  text-transform: capitalize;
-  margin: 20px auto;
+  &_name {
+    margin: 20px auto;
+    font-size: 1.2rem;
+    font-weight: bold;
+    text-transform: capitalize;
+    font-weight: bold;
+  }
+
+  &_title {
+    text-transform: capitalize;
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
 }
 
 .colors {
@@ -50,12 +105,34 @@
   grid-column-gap: 5px;
   grid-row-gap: 5px;
   justify-content: center;
+
+  &_detailed {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-column-gap: 5px;
+    grid-row-gap: 5px;
+    justify-content: center;
+    margin: 40px;
+  }
+
+  &_box {
+    display: flex;
+    flex-direction: row;
+  }
 }
 
 .color {
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
+  &_circle {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+  }
+
+  &_rectangle {
+    width: 40px;
+    height: 20px;
+    margin: 5px;
+  }
 }
 
 .button {
@@ -68,21 +145,23 @@
 
   &_buy {
     height: 40px;
-    width: 176px;
+    width: 180px;
     background: #d45ba8;
+    font-size: 1rem;
     color: #fff;
     border: 1px solid #d45ba8;
     transition: all 1s;
-    font-size: 18px;
+
     &:hover {
       box-shadow: 0 3px 13px rgba(23, 32, 49, 0.26);
     }
+    
     &__active {
       border: 1px solid #e2e6e9;
-      color: gray;
+      color: #afb9c8;
       background-color: #fff;
       height: 40px;
-      width: 176px;
+      width: 180px;
       transition: all 1s;
     }
   }

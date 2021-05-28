@@ -1,86 +1,106 @@
-import React, { Dispatch, SetStateAction } from 'react'
-import Image from 'next/image'
-import Link from 'next/link'
-import styles from './products.module.scss'
-import { IProduct } from '../types/types'
+import Image from 'next/image';
+import Link from 'next/link';
+import {
+  ADDED,
+  ADD_TO,
+  FILLED_HEART,
+  EMPTY_HEART,
+  handleClick,
+  isAdded,
+  IProductComponentProps,
+} from '../shared';
+import styles from '../styles/products.module.scss';
 
-const Product = ({ product, cart, setCart, favorites, setFavorites }:{
-  product: IProduct,
-  cart: Array<IProduct>,
-  setCart: Dispatch<SetStateAction<IProduct[]>>,
-  favorites: Array<IProduct>,
-  setFavorites: Dispatch<SetStateAction<IProduct[]>>
-}) => {
-  const { id, api_featured_image, brand, name, price, price_sign, product_colors } = product;
+const Product = ({
+  product,
+  cart,
+  setCart,
+  favorites,
+  setFavorites,
+}: IProductComponentProps): JSX.Element => {
+  const {
+    id,
+    api_featured_image,
+    brand,
+    name,
+    price,
+    price_sign,
+    product_colors,
+  } = product;
 
-  const handleClick = () => {
-    if (favorites.length === 0) {
-      setFavorites([product]);
-    } else {
-      setFavorites(
-        favorites.some(item => item.id === id)
-          ? [...favorites.filter(item => item.id !== id)]
-          : [...favorites, product]
-      );
-    }
-  };
+  const {
+    brand_name,
+    button,
+    button_buy,
+    button_buy__active,
+    button_like,
+    colors,
+    color_circle,
+    image,
+    products,
+    products__container,
+  } = styles;
 
-  const handleAddCart = () => {
-    if (cart.length === 0) {
-      setCart([product]);
-    } else {
-      setCart(
-        cart.some(item => item.id === id)
-          ? [...cart.filter(item => item.id !== id)]
-          : [...cart, product]
-      );
-    }
-  };
+  const ClassName = isAdded(cart, id) ? button_buy__active : button_buy;
 
-  return (
-    <div className={styles.product}>
-      <Link href={`/product/${id}`}>
-        <a className={styles.product_container}>
-            <Image 
-              src={`http:${api_featured_image}`}
-              width={210}
-              height={210}
-              className={styles.image}
-            />
-            <h3 className={styles.brand}>{brand}</h3>
-            <p>{name}</p>
-            <p>{price}<span>{price_sign}</span></p>
-            <div className={styles.colors}>
-              {product_colors.slice(0, 30).map((col, i) => (
-                <div className={styles.color} style={{ background: `${col.hex_value}` }} key={`${col.hex_value}-${i}`}></div>
-              ))}
-            </div>
-        </a>  
-      </Link>
-      <div className={styles.button}>
-        <button
-          type="button"
-          className={
-            cart.some(purchase => purchase.id === id)
-              ? styles.button_buy__active
-              : styles.button_buy
-          }
-          onClick={handleAddCart}
-        >
-          {cart.some(purchase => purchase.id === id)
-            ? 'Added to cart'
-            : 'Add to cart'}
-        </button>
-        <button type="button" className={styles.button_like} onClick={handleClick}>
-          {favorites.some(item => item.id === id) ? (
-            <img src="/FilledHeartLike.svg" alt="heart icon" />
-          ) : (
-            <img src="/HeartLike.svg" alt="heart icon" />
-          )}
-        </button>
-      </div>
+  const ButtonTitle = isAdded(cart, id) ? ADDED : ADD_TO;
+
+  const Icon = isAdded(favorites, id) ? FILLED_HEART : EMPTY_HEART;
+
+  const Buttons = (): JSX.Element => (
+    <div className={button}>
+      <button
+        type="submit"
+        className={ClassName}
+        onClick={handleClick(cart, setCart, product, id)}
+      >
+        {ButtonTitle}
+      </button>
+      <button
+        type="submit"
+        className={button_like}
+        onClick={handleClick(favorites, setFavorites, product, id)}
+      >
+        <img src={Icon} alt="heart icon" />
+      </button>
     </div>
   );
-}
+
+  const Colors = (): JSX.Element => (
+    <ul className={colors}>
+      {product_colors.slice(0, 30).map((color, i) => (
+        <li
+          className={color_circle}
+          //in-line style is using because hex value comes from API
+          style={{ background: `${color.hex_value}` }}
+          key={`${color.hex_value}-${i}`}
+        />
+      ))}
+    </ul>
+  );
+
+  return (
+    <div className={products}>
+      <Link href={`/product/${id}`}>
+        <a className={products__container}>
+          <Image
+            src={`http:${api_featured_image}`}
+            width={210}
+            height={210}
+            className={image}
+          />
+          <p className={brand_name}>{brand}</p>
+          <p>{name}</p>
+          <p>
+            {price}
+            <span>{price_sign}</span>
+          </p>
+          <Colors />
+        </a>
+      </Link>
+      <Buttons />
+    </div>
+  );
+};
 
 export default Product;
