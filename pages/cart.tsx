@@ -1,21 +1,20 @@
-import React from 'react';
+import { NextPage } from 'next';
 import Image from 'next/image';
-import { IProduct } from '../shared';
-import styles from '../styles/cart.module.scss';
+import { CART_TITLE, CART_EMPTY, useAppContext } from '@shared';
+import styles from '@styles/cart.module.scss';
 
-const CART_TITLE = 'Cart';
-const EMPTY_CART = 'Your cart is empty';
+const Cart: NextPage = () => {
+  const { cart } = useAppContext();
 
-const Cart = ({ cart }: { cart: IProduct[] }): JSX.Element => {
-  const Count = cart.length
-    ? cart.map((product) => Number(product.price)).reduce((a, b) => a + b)
-    : '0';
+  const Count: number = cart.length
+    ? cart.map((product) => +product.price).reduce((a, b) => a + b)
+    : 0;
 
   const { cart_container, details, image, product, title, total } = styles;
 
   return (
     <div className={cart_container}>
-      <h2 className={title}>{cart.length ? CART_TITLE : EMPTY_CART}</h2>
+      <h2 className={title}>{cart.length ? CART_TITLE : CART_EMPTY}</h2>
       {cart.map(({ id, api_featured_image, name, brand, price }) => (
         <div className={product} key={id}>
           <Image

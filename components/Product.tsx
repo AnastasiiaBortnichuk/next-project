@@ -1,23 +1,21 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import { FC } from 'react';
 import {
-  ADDED,
-  ADD_TO,
+  CART_ADDED,
+  CART_ADD_TO,
   FILLED_HEART,
   EMPTY_HEART,
   handleClick,
   isAdded,
-  IProductComponentProps,
-} from '../shared';
-import styles from '../styles/products.module.scss';
+  IProduct,
+  useAppContext,
+} from '@shared';
+import styles from '@styles/products.module.scss';
 
-const Product = ({
-  product,
-  cart,
-  setCart,
-  favorites,
-  setFavorites,
-}: IProductComponentProps): JSX.Element => {
+const Product: FC<{ product: IProduct }> = ({ product }) => {
+  const { cart, setCart, favorites, setFavorites } = useAppContext();
+
   const {
     id,
     api_featured_image,
@@ -41,32 +39,32 @@ const Product = ({
     products__container,
   } = styles;
 
-  const ClassName = isAdded(cart, id) ? button_buy__active : button_buy;
+  const Buttons: FC = () => {
+    const ClassName = isAdded(cart, id) ? button_buy__active : button_buy;
+    const ButtonTitle = isAdded(cart, id) ? CART_ADDED : CART_ADD_TO;
+    const Icon = isAdded(favorites, id) ? FILLED_HEART : EMPTY_HEART;
 
-  const ButtonTitle = isAdded(cart, id) ? ADDED : ADD_TO;
+    return (
+      <div className={button}>
+        <button
+          type="submit"
+          className={ClassName}
+          onClick={handleClick(cart, setCart, product, id)}
+        >
+          {ButtonTitle}
+        </button>
+        <button
+          type="submit"
+          className={button_like}
+          onClick={handleClick(favorites, setFavorites, product, id)}
+        >
+          <img src={Icon} alt="heart icon" />
+        </button>
+      </div>
+    );
+  };
 
-  const Icon = isAdded(favorites, id) ? FILLED_HEART : EMPTY_HEART;
-
-  const Buttons = (): JSX.Element => (
-    <div className={button}>
-      <button
-        type="submit"
-        className={ClassName}
-        onClick={handleClick(cart, setCart, product, id)}
-      >
-        {ButtonTitle}
-      </button>
-      <button
-        type="submit"
-        className={button_like}
-        onClick={handleClick(favorites, setFavorites, product, id)}
-      >
-        <img src={Icon} alt="heart icon" />
-      </button>
-    </div>
-  );
-
-  const Colors = (): JSX.Element => (
+  const Colors: FC = () => (
     <ul className={colors}>
       {product_colors.slice(0, 30).map((color, i) => (
         <li

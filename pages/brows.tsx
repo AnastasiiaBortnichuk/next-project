@@ -1,17 +1,17 @@
-import { GetStaticProps } from 'next';
-import Products from '../components/Products';
-import { fetchData, IProductsProps } from '../shared';
-import styles from '../styles/products.module.scss';
+import { GetStaticProps, NextPage } from 'next';
+import Products from '@components/Products';
+import { IProduct, fetchData } from '@shared';
+import styles from '@styles/products.module.scss';
 
-const Brows = (props: IProductsProps): JSX.Element => (
+const BrowsPage: NextPage<{ products: IProduct[] }> = ({ products }) => (
   <>
     <h2 className={styles.title}>Eyebrows</h2>
-    <Products {...props} />
+    <Products products={products} />
   </>
 );
 
 export const getStaticProps: GetStaticProps = async () => {
-  const products = await fetchData('eyebrow');
+  const products = await fetchData<IProduct[]>('eyebrow');
 
   return {
     props: {
@@ -20,4 +20,4 @@ export const getStaticProps: GetStaticProps = async () => {
   };
 };
 
-export default Brows;
+export default BrowsPage;

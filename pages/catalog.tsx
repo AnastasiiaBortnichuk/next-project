@@ -1,19 +1,13 @@
-import React, { useState, useMemo, Dispatch } from 'react';
-import { GetStaticProps } from 'next';
-import Products from '../components/Products';
-import { BASE_JSON_URL, IProduct, IComponentProps } from '../shared';
-import styles from '../styles/catalog.module.scss';
+import React, { useState, useMemo, Dispatch, FC } from 'react';
+import { GetStaticProps, NextPage } from 'next';
+import Products from '@components/Products';
+import { BASE_JSON_URL, IProduct } from '@shared';
+import styles from '@styles/catalog.module.scss';
 
-interface ICatalogProps extends IComponentProps {
-  products: IProduct[];
-  brands: string[];
-}
-
-const Catalog = ({
+const Catalog: NextPage<{ products: IProduct[]; brands: string[] }> = ({
   products,
   brands,
-  ...props
-}: ICatalogProps): JSX.Element => {
+}) => {
   const [query, setQuery] = useState('');
   const [filterBrand, setBrand] = useState<string | undefined>();
 
@@ -55,7 +49,7 @@ const Catalog = ({
     }
   }, [searchedProducts, filterBrand]);
 
-  const Filter = (): JSX.Element => (
+  const Filter: FC = () => (
     <div className={filter}>
       <div className={filter_group}>
         <p className={selection}>Sort by</p>
@@ -89,7 +83,7 @@ const Catalog = ({
     <>
       <Filter />
       <h2 className={title}>All our products</h2>
-      <Products products={productsByBrand} {...props} />
+      <Products products={productsByBrand} />
     </>
   );
 };
