@@ -2,7 +2,11 @@ import { AppProps } from 'next/app';
 import Head from 'next/head';
 import { FC } from 'react';
 import Header from '@components/Header';
-import { MENU_ITEMS, AppContextProvider } from '@shared';
+import {
+  MENU_ITEMS,
+  CartContextProvider,
+  FavoritesContextProvider,
+} from '@shared';
 import '@styles/globals.scss';
 
 const App: FC<AppProps> = ({ Component, pageProps }) => (
@@ -12,9 +16,11 @@ const App: FC<AppProps> = ({ Component, pageProps }) => (
       <link rel="icon" href="/favicon.ico" />
     </Head>
     <Header items={MENU_ITEMS} />
-    <AppContextProvider>
-      <Component {...pageProps} />
-    </AppContextProvider>
+    <CartContextProvider>
+      <FavoritesContextProvider>
+        <Component {...pageProps} />
+      </FavoritesContextProvider>
+    </CartContextProvider>
   </>
 );
 

@@ -1,10 +1,10 @@
 import { NextPage } from 'next';
 import Image from 'next/image';
-import { CART_TITLE, CART_EMPTY, useAppContext } from '@shared';
+import { CART_TITLE, CART_EMPTY, useCartContext } from '@shared';
 import styles from '@styles/cart.module.scss';
 
 const Cart: NextPage = () => {
-  const { cart } = useAppContext();
+  const { cart } = useCartContext();
 
   const Count: number = cart.length
     ? cart.map((product) => +product.price).reduce((a, b) => a + b)

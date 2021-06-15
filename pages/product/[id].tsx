@@ -11,12 +11,14 @@ import {
   handleClick,
   isAdded,
   IProduct,
-  useAppContext,
+  useCartContext,
+  useFavoritesContext,
 } from '@shared';
 import styles from '@styles/products.module.scss';
 
 const ProductPage: NextPage<{ product: IProduct }> = ({ product }) => {
-  const { cart, setCart, favorites, setFavorites } = useAppContext();
+  const { cart, setCart } = useCartContext();
+  const { favorites, setFavorites } = useFavoritesContext();
 
   const {
     id,

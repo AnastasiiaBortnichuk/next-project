@@ -1,9 +1,13 @@
 import Products from '@components/Products';
-import { FAVORITES_TITLE, NO_FAVORITES_TITLE, useAppContext } from '@shared';
+import {
+  FAVORITES_TITLE,
+  NO_FAVORITES_TITLE,
+  useFavoritesContext,
+} from '@shared';
 import { NextPage } from 'next';
 
 const Favorites: NextPage = () => {
-  const { favorites } = useAppContext();
+  const { favorites } = useFavoritesContext();
 
   const Title = (): string =>
     favorites.length ? FAVORITES_TITLE : NO_FAVORITES_TITLE;
