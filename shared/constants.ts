@@ -18,6 +18,8 @@ export const FILLED_HEART = '/filledHeartLike.svg';
 
 export const EMPTY_HEART = '/heartLike.svg';
 
+export const DELETE_BUTTON = '/delete.png';
+
 export const FAVORITES_TITLE = 'You liked these products';
 
 export const NO_FAVORITES_TITLE = 'Nothing was added to favorites';
