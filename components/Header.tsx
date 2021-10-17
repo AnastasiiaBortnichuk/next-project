@@ -9,14 +9,16 @@ const Header: FC<{ items: string[] }> = ({ items }) => {
   return (
     <header className={headerContainer}>
       <Link href="/">
-        <a>
+        <a id="test-icon">
           <Image src="/favicon.ico" width={50} height={50} />
         </a>
       </Link>
       <nav className={nav}>
         {items.map((item) => (
           <Link href={`/${item}`} key={item}>
-            <a className={link}>{item}</a>
+            <a className={link} data-testid="test-link">
+              {item}
+            </a>
           </Link>
         ))}
       </nav>
