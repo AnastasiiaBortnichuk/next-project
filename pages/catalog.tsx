@@ -1,8 +1,22 @@
 import React, { useState, useMemo, Dispatch, FC } from 'react';
 import { GetStaticProps, NextPage } from 'next';
+import algoliasearch from 'algoliasearch/lite';
+import {
+  InstantSearch,
+  SearchBox,
+  Hits,
+  RefinementList,
+  Pagination,
+  Highlight,
+} from 'react-instantsearch-dom';
 import Products from '@components/Products';
 import { BASE_JSON_URL, IProduct } from '@shared';
 import styles from '@styles/catalog.module.scss';
+
+const searchClient = algoliasearch(
+  'XZYP9E6B2D',
+  '351ddd988d60d1367b28bc6814901be8'
+);
 
 const Catalog: NextPage<{ products: IProduct[]; brands: string[] }> = ({
   products,
@@ -82,11 +96,45 @@ const Catalog: NextPage<{ products: IProduct[]; brands: string[] }> = ({
   return (
     <>
       <Filter />
+      <InstantSearch indexName="next_project" searchClient={searchClient}>
+        <div className="search-panel">
+          <div className="search-panel__filters">
+            <RefinementList attribute="brand" />
+          </div>
+
+          <div className="search-panel__results">
+            <SearchBox
+              className="searchbox"
+              translations={{
+                placeholder: '',
+              }}
+            />
+            <Hits hitComponent={Hit} />
+
+            <div className="pagination">
+              <Pagination />
+            </div>
+          </div>
+        </div>
+      </InstantSearch>
       <h2 className={title}>All our products</h2>
       <Products products={productsByBrand} />
     </>
   );
 };
+
+function Hit(props) {
+  return (
+    <article>
+      <h1>
+        <Highlight attribute="name" hit={props.hit} />
+      </h1>
+      <p>
+        <Highlight attribute="description" hit={props.hit} />
+      </p>
+    </article>
+  );
+}
 
 export const getStaticProps: GetStaticProps = async () => {
   const res = await fetch(BASE_JSON_URL);
