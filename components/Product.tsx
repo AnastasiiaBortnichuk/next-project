@@ -88,6 +88,7 @@ const Product: FC<{ product: IProduct }> = ({ product }) => {
             width={210}
             height={210}
             className={image}
+            id="test-image"
           />
           <p className={brand_name}>{brand}</p>
           <p>{name}</p>

@@ -12,7 +12,7 @@ describe('All products page', () => {
 
   it('Should go to catalog page', () => {
     cy.contains('a', 'catalog').click();
-    cy.wait(10000);
+    cy.wait(20000);
     cy.url().should('include', '/catalog');
     cy.get('[data-testid=all-products]').should('be.visible');    
   });
