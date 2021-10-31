@@ -1,20 +1,15 @@
 import Link from 'next/link';
-import Products from '../components/Products';
-import { IComponentProps, IProductTypes, updateTitle } from '../shared';
-import styles from '../styles/products.module.scss';
+import Products from '@components/Products';
+import { IProduct, ProductTypes, updateTitle, CLICK } from '@shared';
+import styles from '@styles/products.module.scss';
+import { FC } from 'react';
 
-interface IProductsSection extends IComponentProps {
+const ProductsSection: FC<{
   products: string[];
-  productProps: IProductTypes;
-}
-
-const CLICK = 'click to view all';
-
-const ProductsSection = ({
-  products,
-  productProps,
-  ...prop
-}: IProductsSection): JSX.Element => {
+  productProps: {
+    props: Record<ProductTypes, IProduct[]>;
+  };
+}> = ({ products, productProps }) => {
   const { link, products__section, title } = styles;
 
   return (
@@ -27,7 +22,7 @@ const ProductsSection = ({
               {CLICK}
             </a>
           </Link>
-          <Products products={productProps[product].slice(0, 10)} {...prop} />
+          <Products products={productProps[product].slice(0, 10)} />
         </section>
       ))}
     </>

@@ -1,22 +1,27 @@
 import { AppProps } from 'next/app';
-import { useState } from 'react';
-import Layout from '../Layout/Layout';
-import '../styles/globals.scss';
+import Head from 'next/head';
+import { FC } from 'react';
+import Header from '@components/Header';
+import {
+  MENU_ITEMS,
+  CartContextProvider,
+  FavoritesContextProvider,
+} from '@shared';
+import '@styles/globals.scss';
 
-const App = ({ Component, pageProps }: AppProps): JSX.Element => {
-  const [favorites, setFavorites] = useState([]);
-  const [cart, setCart] = useState([]);
-  return (
-    <Layout>
-      <Component
-        {...pageProps}
-        favorites={favorites}
-        setFavorites={setFavorites}
-        cart={cart}
-        setCart={setCart}
-      />
-    </Layout>
-  );
-};
+const App: FC<AppProps> = ({ Component, pageProps }) => (
+  <>
+    <Head>
+      <title>MakeUp</title>
+      <link rel="icon" href="/favicon.ico" />
+    </Head>
+    <Header items={MENU_ITEMS} />
+    <CartContextProvider>
+      <FavoritesContextProvider>
+        <Component {...pageProps} />
+      </FavoritesContextProvider>
+    </CartContextProvider>
+  </>
+);
 
 export default App;

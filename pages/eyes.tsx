@@ -1,36 +1,17 @@
-import { GetStaticProps } from 'next';
-import ProductsSection from '../components/ProductsSection';
-import { IComponentProps, IProduct, fetchData } from '../shared';
-
-interface IEyesProducts extends IComponentProps {
-  mascara: IProduct[];
-  eyeliner: IProduct[];
-  eyeshadow: IProduct[];
-}
+import { GetStaticProps, NextPage } from 'next';
+import ProductsSection from '@components/ProductsSection';
+import { IProduct, ProductTypes, fetchData } from '@shared';
 
 const EYES_PRODUCTS = ['mascara', 'eyeliner', 'eyeshadow'];
 
-const Eyes = ({
-  mascara,
-  eyeliner,
-  eyeshadow,
-  ...props
-}: IEyesProducts): JSX.Element => {
-  const productProps = { mascara, eyeliner, eyeshadow };
-
-  return (
-    <ProductsSection
-      products={EYES_PRODUCTS}
-      productProps={productProps}
-      {...props}
-    />
-  );
-};
+const EyesPage: NextPage<{ props: Record<ProductTypes, IProduct[]> }> = (
+  props
+) => <ProductsSection products={EYES_PRODUCTS} productProps={props} />;
 
 export const getStaticProps: GetStaticProps = async () => {
-  const mascara = await fetchData('mascara');
-  const eyeliner = await fetchData('eyeliner');
-  const eyeshadow = await fetchData('eyeshadow');
+  const mascara = await fetchData<IProduct[]>('mascara');
+  const eyeliner = await fetchData<IProduct[]>('eyeliner');
+  const eyeshadow = await fetchData<IProduct[]>('eyeshadow');
 
   return {
     props: {
@@ -41,4 +22,4 @@ export const getStaticProps: GetStaticProps = async () => {
   };
 };
 
-export default Eyes;
+export default EyesPage;

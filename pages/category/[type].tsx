@@ -1,18 +1,16 @@
 import { GetStaticProps, GetStaticPaths } from 'next';
-import Products from '../../components/Products';
-import {
-  BASE_JSON_URL,
-  IProductsProps,
-  fetchData,
-  updateTitle,
-  IProduct,
-} from '../../shared';
-import styles from '../../styles/products.module.scss';
+import Products from '@components/Products';
+import { BASE_JSON_URL, fetchData, updateTitle, IProduct } from '@shared';
+import styles from '@styles/products.module.scss';
+import { FC } from 'react';
 
-const ProductPage = (props: IProductsProps): JSX.Element => (
+const CategoryPage: FC<{ products: IProduct[]; type: string }> = ({
+  products,
+  type,
+}) => (
   <>
-    <h2 className={styles.title}>{updateTitle(props.type)}</h2>
-    <Products {...props} />
+    <h2 className={styles.title}>{updateTitle(type)}</h2>
+    <Products products={products} />
   </>
 );
 
@@ -35,7 +33,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 };
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
-  const products = await fetchData(params.type);
+  const products = await fetchData<IProduct[]>(params.type);
 
   return {
     props: {
@@ -45,4 +43,4 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   };
 };
 
-export default ProductPage;
+export default CategoryPage;

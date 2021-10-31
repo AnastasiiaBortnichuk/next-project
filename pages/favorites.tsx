@@ -1,18 +1,22 @@
-import Products from '../components/Products';
-import { IComponentProps, IProduct } from '../shared';
+import Products from '@components/Products';
+import {
+  FAVORITES_TITLE,
+  NO_FAVORITES_TITLE,
+  useFavoritesContext,
+} from '@shared';
+import { NextPage } from 'next';
 
-const FAVORITES_TITLE = 'You liked these products';
-const NO_FAVORITES_TITLE = 'Nothing was added to favorites';
+const Favorites: NextPage = () => {
+  const { favorites } = useFavoritesContext();
 
-const Favorites = (props: IComponentProps): JSX.Element => {
-  const Title = (favorites: IProduct[]): string =>
+  const Title = (): string =>
     favorites.length ? FAVORITES_TITLE : NO_FAVORITES_TITLE;
 
   return (
     <>
       <section>
-        <h1>{Title(props.favorites)}</h1>
-        <Products products={props.favorites} {...props} />
+        <h1>{Title()}</h1>
+        <Products products={favorites} />
       </section>
       {/* Added to demonstrate the built-in Next.js functionality of style jsx' */}
       <style jsx>{`

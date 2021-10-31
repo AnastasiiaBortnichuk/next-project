@@ -1,17 +1,17 @@
-import { GetStaticProps } from 'next';
-import Products from '../components/Products';
-import { fetchData, IProductsProps } from '../shared';
-import styles from '../styles/products.module.scss';
+import { GetStaticProps, NextPage } from 'next';
+import Products from '@components/Products';
+import { fetchData, IProduct } from '@shared';
+import styles from '@styles/products.module.scss';
 
-const Nails = (props: IProductsProps): JSX.Element => (
+const NailsPage: NextPage<{ products: IProduct[] }> = ({ products }) => (
   <>
     <h2 className={styles.title}>Nail Polishes</h2>
-    <Products {...props} />
+    <Products products={products} />
   </>
 );
 
 export const getStaticProps: GetStaticProps = async () => {
-  const products = await fetchData('nail_polish');
+  const products = await fetchData<IProduct[]>('nail_polish');
 
   return {
     props: {
@@ -20,4 +20,4 @@ export const getStaticProps: GetStaticProps = async () => {
   };
 };
 
-export default Nails;
+export default NailsPage;

@@ -1,38 +1,18 @@
-import { GetStaticProps } from 'next';
-import ProductsSection from '../components/ProductsSection';
-import { IComponentProps, IProduct, fetchData } from '../shared';
-
-interface ILipsProducts extends IComponentProps {
-  lipstick: IProduct[];
-  //this variable has a name with underscore because it must match
-  //the value of the product category that comes in response to the request
-  lip_liner: IProduct[];
-}
+import { GetStaticProps, NextPage } from 'next';
+import ProductsSection from '@components/ProductsSection';
+import { IProduct, ProductTypes, fetchData } from '@shared';
 
 const LIPS_PRODUCTS = ['lipstick', 'lip_liner'];
+//'lip_liner' variable has a name with underscore because it must match
+//the value of the product category that comes in response to the request
 
-const Lips = ({
-  lipstick,
-  lip_liner,
-  ...props
-}: ILipsProducts): JSX.Element => {
-  const productProps = {
-    lipstick,
-    lip_liner,
-  };
-
-  return (
-    <ProductsSection
-      products={LIPS_PRODUCTS}
-      productProps={productProps}
-      {...props}
-    />
-  );
-};
+const LipsPage: NextPage<{ props: Record<ProductTypes, IProduct[]> }> = (
+  props
+) => <ProductsSection products={LIPS_PRODUCTS} productProps={props} />;
 
 export const getStaticProps: GetStaticProps = async () => {
-  const lipstick = await fetchData('lipstick');
-  const lip_liner = await fetchData('lip_liner');
+  const lipstick = await fetchData<IProduct[]>('lipstick');
+  const lip_liner = await fetchData<IProduct[]>('lip_liner');
 
   return {
     props: {
@@ -42,4 +22,4 @@ export const getStaticProps: GetStaticProps = async () => {
   };
 };
 
-export default Lips;
+export default LipsPage;
