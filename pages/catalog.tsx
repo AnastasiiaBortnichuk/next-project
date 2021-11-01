@@ -105,7 +105,9 @@ const Catalog: NextPage<{ products: IProduct[]; brands: string[] }> = ({
   return (
     <>
       <Filter />
-      <h2 className={title}>All our products</h2>
+      <h2 className={title} data-testid="all-products">
+        All our products
+      </h2>
       <Products products={sortedByPrice} />
     </>
   );

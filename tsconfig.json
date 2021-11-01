@@ -22,12 +22,13 @@
       "@components/*": ["components/*"],
       "@shared": ["shared/index"],
       "@styles/*": ["styles/*"],
-    }
+    },
+    "types": ["cypress", "@testing-library/cypress"]
   },
   "include": [
     "next-env.d.ts",
     "**/*.ts",
-    "**/*.tsx",
+    "**/*.tsx", "cypress/component/header.spec.js",
   ],
   "exclude": [
     "node_modules"
