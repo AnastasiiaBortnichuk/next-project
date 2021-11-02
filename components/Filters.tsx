@@ -7,7 +7,7 @@ const Filters: FC<{
   brands: string[];
   setFilteredProducts: Dispatch<IProduct[]>;
 }> = ({ products, brands, setFilteredProducts }) => {
-  const [query, setQuery] = useState('');
+  const [query, setQuery] = useState<string>('');
   const [filterBrand, setBrand] = useState<string | undefined>();
   const [priceRate, setPriceRate] = useState<string>('all');
 
