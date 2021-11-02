@@ -10,7 +10,7 @@ const Catalog: NextPage<{ products: IProduct[]; brands: string[] }> = ({
   brands,
 }) => {
   const [filteredProducts, setFilteredProducts] =
-    useState<IProduct[]>(products);
+    useState<IProduct[]>([...products]);
 
   return (
     <>
