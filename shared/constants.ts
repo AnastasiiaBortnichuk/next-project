@@ -27,6 +27,7 @@ export const NO_FAVORITES_TITLE = 'Nothing was added to favorites';
 export const CATEGORIES = ['face', 'brows', 'lips', 'nails', 'eyes'];
 
 export const MENU_ITEMS = [
+  'search',
   'catalog',
   'face',
   'eyes',
