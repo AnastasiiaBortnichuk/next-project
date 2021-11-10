@@ -21,7 +21,9 @@ const Catalog: NextPage<{ products: IProduct[]; brands: string[] }> = ({
         brands={brands}
         setFilteredProducts={setFilteredProducts}
       />
-      <h2 className={styles.title}>All our products</h2>
+      <h2 className={styles.title} data-testid="all-products">
+        All our products
+      </h2>
       <Products products={filteredProducts} />
     </>
   );

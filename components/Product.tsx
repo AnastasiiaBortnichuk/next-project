@@ -74,6 +74,7 @@ const Product: FC<{ product: IProduct }> = ({ product }) => {
           //in-line style is using because hex value comes from API
           style={{ background: `${color.hex_value}` }}
           key={`${color.hex_value}-${i}`}
+          id={color.hex_value.replace(/#/g, '')}
         />
       ))}
     </ul>
@@ -88,6 +89,7 @@ const Product: FC<{ product: IProduct }> = ({ product }) => {
             width={210}
             height={210}
             className={image}
+            id="test-image"
           />
           <p className={brand_name}>{brand}</p>
           <p>{name}</p>
