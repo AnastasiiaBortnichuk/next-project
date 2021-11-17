@@ -2,11 +2,9 @@ import { NextPage } from 'next';
 
 const Error: NextPage<{ statusCode: number }> = ({ statusCode }) => {
   return (
-    <p>
-      {statusCode
-        ? `An error ${statusCode} occurred on server`
-        : 'An error occurred on client'}
-    </p>
+    <p>{`An error ${statusCode || ''} occurred on  ${
+      statusCode ? 'server' : 'client'
+    }`}</p>
   );
 };
 

@@ -11,8 +11,9 @@ const LipsPage: NextPage<{ props: Record<ProductTypes, IProduct[]> }> = (
 ) => <ProductsSection products={LIPS_PRODUCTS} productProps={props} />;
 
 export const getStaticProps: GetStaticProps = async () => {
-  const lipstick = await fetchData<IProduct[]>('lipstick');
-  const lip_liner = await fetchData<IProduct[]>('lip_liner');
+  const [lipstick, lip_liner] = await Promise.all(
+    LIPS_PRODUCTS.map((product) => fetchData<IProduct[]>(product))
+  );
 
   return {
     props: {

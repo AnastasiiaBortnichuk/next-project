@@ -13,14 +13,13 @@ import {
   Pagination,
   Highlight,
 } from 'react-instantsearch-dom';
+import { ATTRIBUTES } from '@shared';
 import styles from '@styles/search.module.scss';
 import productStyles from '@styles/products.module.scss';
 
 const client = algoliasearch('XZYP9E6B2D', '351ddd988d60d1367b28bc6814901be8');
 
-const Hit = ({ hit }) => {
-  console.log(hit);
-
+const Hit = ({ hit }): JSX.Element => {
   const {
     brand_name,
     image,
@@ -44,15 +43,14 @@ const Hit = ({ hit }) => {
                 height={210}
                 className={image}
               />
-              <div className={brand_name}>
-                <Highlight attribute="name" hit={hit} />
-              </div>
-              <div className={brand_title}>
-                <Highlight attribute="brand" hit={hit} className={brand_name} />
-              </div>
-              <div className={brand_name}>
-                <Highlight attribute="product_type" hit={hit} />
-              </div>
+              {ATTRIBUTES.map((attr) => (
+                <div
+                  className={attr === 'brand' ? brand_title : brand_name}
+                  key={attr}
+                >
+                  <Highlight attribute={attr} hit={hit} />
+                </div>
+              ))}
               <div className={brand_title}>${hit.price}</div>
             </div>
             <div className={product_result_right}>

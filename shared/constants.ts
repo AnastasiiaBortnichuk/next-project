@@ -27,6 +27,9 @@ export const ERROR_TRY = 'Try any of these links instead:';
 export const THANKS_TEXT = 'Thank you for your purchase!';
 
 export const CATEGORIES = ['face', 'brows', 'lips', 'nails', 'eyes'];
+export const ATTRIBUTES = ['name', 'brand', 'product_type'];
+
+export const SORTING_ORDER = { all: 'all', asc: 'asc', desc: 'desc' };
 
 export const MENU_ITEMS = [
   'search',

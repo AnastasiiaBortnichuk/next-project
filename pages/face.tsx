@@ -9,9 +9,9 @@ const FacePage: NextPage<{ props: Record<ProductTypes, IProduct[]> }> = (
 ) => <ProductsSection products={FACE_PRODUCTS} productProps={props} />;
 
 export const getStaticProps: GetStaticProps = async () => {
-  const blush = await fetchData<IProduct[]>('blush');
-  const bronzer = await fetchData<IProduct[]>('bronzer');
-  const foundation = await fetchData<IProduct[]>('foundation');
+  const [blush, bronzer, foundation] = await Promise.all(
+    FACE_PRODUCTS.map((product) => fetchData<IProduct[]>(product))
+  );
 
   return {
     props: {

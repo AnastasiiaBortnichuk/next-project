@@ -6,7 +6,7 @@ describe('Header links test', () => {
   });
 
   it('Have face link', () => {
-    cy.get('[data-testid=test-link]').should('exist');
+    cy.getLink().should('exist');
     cy.contains('a', 'face').should('be.visible');
   });
 
@@ -23,7 +23,7 @@ describe('Header links test', () => {
   });
 
   it('Have favorites link', () => {
-    cy.get('[data-testid=test-link]').should('exist');
+    cy.getLink().should('exist');
     cy.contains('a', 'favorites').should('be.visible');
   });
 
