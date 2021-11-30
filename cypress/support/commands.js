@@ -24,8 +24,8 @@
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 
-Cypress.Commands.add('getLink', () => {
-  cy.get(`[data-testid=test-link]`)
+Cypress.Commands.add('getByTestId', (testId) => {
+  cy.get(`[data-testid=${testId}]`)
 });
 
 import '@testing-library/cypress/add-commands';

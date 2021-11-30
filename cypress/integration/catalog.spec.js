@@ -6,7 +6,7 @@ describe('All products page', () => {
   })
 
   it('Have catalog link', () => {
-    cy.getLink().should('exist');
+    cy.getByTestId('link').should('exist');
     cy.contains('a', 'catalog').should('be.visible');
   });
 
@@ -14,6 +14,6 @@ describe('All products page', () => {
     cy.contains('a', 'catalog').click();
     cy.wait(20000);
     cy.url().should('include', '/catalog');
-    cy.get('[data-testid=all-products]').should('be.visible');    
+    cy.getByTestId('all-products').should('be.visible');    
   });
 });

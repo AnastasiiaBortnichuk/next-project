@@ -3,7 +3,9 @@ import {
   PRICE_HIGH,
   PRICE_LOW,
   PRICE_SORTING,
-  SORTING_ORDER,
+  ALL,
+  ASC,
+  DESC,
   IProduct,
 } from '@shared';
 import styles from '@styles/catalog.module.scss';
@@ -37,7 +39,7 @@ const Filters: FC<{
 
   const productsByBrand = useMemo(() => {
     switch (filterBrand) {
-      case SORTING_ORDER.all:
+      case ALL:
       case undefined: //"null" and "undefined" value may come in response from request
       case null:
         return searchedProducts;
@@ -50,11 +52,11 @@ const Filters: FC<{
 
   const sortedByPrice = useMemo(() => {
     switch (priceRate) {
-      case SORTING_ORDER.all:
+      case ALL:
         return productsByBrand;
-      case SORTING_ORDER.asc:
+      case ASC:
         return productsByBrand.sort((a, b) => +a.price - +b.price);
-      case SORTING_ORDER.desc:
+      case DESC:
         return productsByBrand.sort((a, b) => +b.price - +a.price);
     }
   }, [productsByBrand, priceRate]);
@@ -71,7 +73,7 @@ const Filters: FC<{
       <div className={filter_group}>
         <p className={selection}>Sort by</p>
         <select className={options} onBlur={handleChange(setBrand)}>
-          <option value={SORTING_ORDER.all}>choose brand</option>
+          <option value={ALL}>choose brand</option>
           {brands.map(
             (brand) =>
               brand && (
@@ -82,9 +84,9 @@ const Filters: FC<{
           )}
         </select>
         <select className={options} onBlur={handleChange(setPriceRate)}>
-          <option value={SORTING_ORDER.all}>{PRICE_SORTING}</option>
-          <option value={SORTING_ORDER.desc}>{PRICE_HIGH}</option>
-          <option value={SORTING_ORDER.asc}>{PRICE_LOW}</option>
+          <option value={ALL}>{PRICE_SORTING}</option>
+          <option value={DESC}>{PRICE_HIGH}</option>
+          <option value={ASC}>{PRICE_LOW}</option>
         </select>
       </div>
       <div className={filter_group}>

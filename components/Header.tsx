@@ -16,7 +16,7 @@ const Header: FC<{ items: string[] }> = ({ items }) => {
       <nav className={nav}>
         {items.map((item) => (
           <Link href={`/${item}`} key={item}>
-            <a className={link} data-testid="test-link">
+            <a className={link} data-testid="link">
               {item}
             </a>
           </Link>
