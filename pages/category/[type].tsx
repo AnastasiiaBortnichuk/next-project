@@ -1,18 +1,30 @@
 import { GetStaticProps, GetStaticPaths } from 'next';
+import Filters from '@components/Filters';
 import Products from '@components/Products';
 import { BASE_JSON_URL, fetchData, updateTitle, IProduct } from '@shared';
 import styles from '@styles/products.module.scss';
-import { FC } from 'react';
+import { FC, useState } from 'react';
 
-const CategoryPage: FC<{ products: IProduct[]; type: string }> = ({
-  products,
-  type,
-}) => (
-  <>
-    <h2 className={styles.title}>{updateTitle(type)}</h2>
-    <Products products={products} />
-  </>
-);
+const CategoryPage: FC<{
+  products: IProduct[];
+  type: string;
+  brands: string[];
+}> = ({ products, type, brands }) => {
+  const [filteredProducts, setFilteredProducts] =
+    useState<IProduct[]>(products);
+
+  return (
+    <>
+      <Filters
+        products={products}
+        brands={brands}
+        setFilteredProducts={setFilteredProducts}
+      />
+      <h2 className={styles.title}>{updateTitle(type)}</h2>
+      <Products products={filteredProducts} />
+    </>
+  );
+};
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const res = await fetch(BASE_JSON_URL);
@@ -35,10 +47,15 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   const products = await fetchData<IProduct[]>(params.type);
 
+  const brands = Array.from(
+    new Set(products.map((product: IProduct) => product.brand).sort())
+  );
+
   return {
     props: {
       products,
       type: params.type,
+      brands,
     },
   };
 };

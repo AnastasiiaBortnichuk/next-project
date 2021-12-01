@@ -109,7 +109,7 @@ const ProductPage: NextPage<{ product: IProduct }> = ({ product }) => {
         <div className={container_box}>
           <p className={brand_title}>Brand: {brand}</p>
           <p className={text}>{description}</p>
-          <p className={text}>Star rating:{rating ? rating : ' unrated'} </p>
+          <p className={text}>Star rating:{rating || ' unrated'} </p>
         </div>
       </div>
 
