@@ -13,11 +13,11 @@ import {
   Pagination,
   Highlight,
 } from 'react-instantsearch-dom';
-import { ATTRIBUTES } from '@shared';
+import { APP_ID, API_KEY, ATTRIBUTES } from '@shared';
 import styles from '@styles/search.module.scss';
 import productStyles from '@styles/products.module.scss';
 
-const client = algoliasearch('XZYP9E6B2D', '351ddd988d60d1367b28bc6814901be8');
+const client = algoliasearch(APP_ID, API_KEY);
 
 const Hit = ({ hit }): JSX.Element => {
   const {
@@ -73,6 +73,8 @@ const Search: NextPage = () => {
     pagination,
     button,
   } = styles;
+
+  console.log("ID", `${APP_ID}`, "Key", API_KEY);
 
   return (
     <div className={container}>
