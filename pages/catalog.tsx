@@ -3,7 +3,7 @@ import { GetStaticProps, NextPage } from 'next';
 
 import Filters from '@components/Filters';
 import Products from '@components/Products';
-import { BASE_JSON_URL, IProduct } from '@shared';
+import { BASE_URL, IProduct } from '@shared';
 import styles from '@styles/catalog.module.scss';
 
 const Catalog: NextPage<{ products: IProduct[]; brands: string[] }> = ({
@@ -30,7 +30,7 @@ const Catalog: NextPage<{ products: IProduct[]; brands: string[] }> = ({
 };
 
 export const getStaticProps: GetStaticProps = async () => {
-  const res = await fetch(BASE_JSON_URL);
+  const res = await fetch(BASE_URL);
   const products = await res.json();
 
   const brands = Array.from(

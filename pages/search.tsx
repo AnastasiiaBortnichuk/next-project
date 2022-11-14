@@ -74,7 +74,7 @@ const Search: NextPage = () => {
     button,
   } = styles;
 
-  console.log("ID", `${APP_ID}`, "Key", API_KEY);
+  console.log('ID', `${APP_ID}`, 'Key', API_KEY);
 
   return (
     <div className={container}>

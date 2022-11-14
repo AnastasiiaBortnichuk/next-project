@@ -1,6 +1,4 @@
 export const BASE_URL = process.env.BASE_URL;
-export const BASE_JSON_URL = process.env.BASE_JSON_URL;
-export const URL_SEARCH = process.env.URL_SEARCH;
 
 export const APP_ID = process.env.APP_ID;
 export const API_KEY = process.env.API_KEY;

@@ -5,7 +5,6 @@ import {
   CART_ADDED,
   CART_ADD_TO,
   BASE_URL,
-  BASE_JSON_URL,
   FILLED_HEART,
   EMPTY_HEART,
   handleClick,
@@ -119,7 +118,7 @@ const ProductPage: NextPage<{ product: IProduct }> = ({ product }) => {
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const res = await fetch(BASE_JSON_URL);
+  const res = await fetch(BASE_URL);
   const products = await res.json();
 
   const paths = products.map(({ id }) => ({
@@ -133,7 +132,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 };
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
-  const res = await fetch(`${BASE_URL}/${params.id}.json`);
+  const res = await fetch(`${BASE_URL}/product/${params.id}`);
   const product = await res.json();
 
   return {

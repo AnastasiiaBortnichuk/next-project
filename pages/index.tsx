@@ -1,7 +1,7 @@
 import { GetStaticProps, NextPage } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
-import { BASE_JSON_URL, CATEGORIES, IProduct, updateTitle } from '@shared';
+import { BASE_URL, CATEGORIES, IProduct, updateTitle } from '@shared';
 import styles from '@styles/home.module.scss';
 
 const Home: NextPage<{ types: string[] }> = ({ types }) => {
@@ -37,7 +37,7 @@ const Home: NextPage<{ types: string[] }> = ({ types }) => {
 };
 
 export const getStaticProps: GetStaticProps = async () => {
-  const res = await fetch(BASE_JSON_URL);
+  const res = await fetch(BASE_URL);
   const products = await res.json();
 
   const types = Array.from(
