@@ -1,5 +1,5 @@
 import { Dispatch } from 'react';
-import { BASE_JSON_URL, IProduct, URL_SEARCH } from '@shared';
+import { BASE_URL, IProduct } from '@shared';
 
 export const handleClick =
   (
@@ -27,6 +27,6 @@ export const isAdded = (list: IProduct[], id: number): boolean => {
 export const updateTitle = (title: string): string => title.replace(/_/g, ' ');
 
 export const fetchData = async <T>(param: string | string[]): Promise<T> => {
-  const res = await fetch(`${BASE_JSON_URL}${URL_SEARCH}${param}`);
+  const res = await fetch(`${BASE_URL}/${param}`);
   return await res.json();
 };

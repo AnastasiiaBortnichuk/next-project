@@ -1,11 +1,11 @@
-import { GetStaticProps, GetStaticPaths } from 'next';
+import { GetStaticProps, GetStaticPaths, NextPage } from 'next';
 import Filters from '@components/Filters';
 import Products from '@components/Products';
-import { BASE_JSON_URL, fetchData, updateTitle, IProduct } from '@shared';
+import { BASE_URL, updateTitle, IProduct, fetchData } from '@shared';
 import styles from '@styles/products.module.scss';
-import { FC, useState } from 'react';
+import { useState } from 'react';
 
-const CategoryPage: FC<{
+const CategoryPage: NextPage<{
   products: IProduct[];
   type: string;
   brands: string[];
@@ -27,7 +27,7 @@ const CategoryPage: FC<{
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const res = await fetch(BASE_JSON_URL);
+  const res = await fetch(BASE_URL);
   const products = await res.json();
 
   const allPaths = products.map((product: IProduct) => ({

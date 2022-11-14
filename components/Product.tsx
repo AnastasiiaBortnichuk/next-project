@@ -95,7 +95,7 @@ const Product: FC<{ product: IProduct }> = ({ product }) => {
           <p>{name}</p>
           <p>
             {price}
-            <span>{price_sign}</span>
+            <span>{price_sign || '$'}</span>
           </p>
           <Colors />
         </a>
