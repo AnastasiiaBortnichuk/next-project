@@ -1,14 +1,21 @@
+import { useEffect, useState } from 'react';
 import { NextPage } from 'next';
 import Image from 'next/image';
+import PurchasePopup from '@components/PurchasePopup';
 import { CART_TITLE, CART_EMPTY, DELETE_BUTTON, useCartContext } from '@shared';
 import styles from '@styles/cart.module.scss';
 
 const Cart: NextPage = () => {
   const { cart, setCart } = useCartContext();
+  const [isPopupShown, setPopupShown] = useState<boolean>(false);
 
   const handleDelete = (id: number) => () => {
     const newCart = cart.filter((product) => product.id !== id);
     setCart(newCart);
+  };
+
+  const handleClick = (): void => {
+    setPopupShown(true);
   };
 
   const Count: number = cart.length
@@ -17,6 +24,7 @@ const Cart: NextPage = () => {
 
   const {
     cart_container,
+    checkout_button,
     delete_button,
     details,
     image,
@@ -24,6 +32,12 @@ const Cart: NextPage = () => {
     title,
     total,
   } = styles;
+
+  useEffect(() => {
+    if (isPopupShown) {
+      setPopupShown(true);
+    }
+  }, [isPopupShown]);
 
   return (
     <div className={cart_container}>
@@ -54,6 +68,15 @@ const Cart: NextPage = () => {
         </div>
       ))}
       <p className={total}>Total: {Count}</p>
+      <button
+        type="submit"
+        className={checkout_button}
+        onClick={handleClick}
+        disabled={Count === 0}
+      >
+        Checkout
+      </button>
+      {isPopupShown && <PurchasePopup setShown={setPopupShown} />}
     </div>
   );
 };
