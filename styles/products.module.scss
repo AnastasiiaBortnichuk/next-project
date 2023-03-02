@@ -87,13 +87,11 @@
     font-size: 1.2rem;
     font-weight: bold;
     text-transform: capitalize;
-    font-weight: bold;
   }
 
   &_title {
-    text-transform: capitalize;
+    @extend .brand_name;
     font-size: 1.5rem;
-    font-weight: bold;
   }
 }
 
@@ -178,5 +176,24 @@
     &:hover {
       border: 1px solid #313237;
     }
+  }
+}
+
+.product_result {
+  display: flex;
+  margin: 20px;
+  padding: 30px 14px 14px;
+  height: 500px;
+
+  &_left {
+    flex: 2;
+  }
+
+  &_right {
+    flex: 3;
+    font-size: 20px;
+    padding-left: 40px;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 }

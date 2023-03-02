@@ -22,7 +22,8 @@
       "@components/*": ["components/*"],
       "@shared": ["shared/index"],
       "@styles/*": ["styles/*"],
-    }
+    },
+    "types": ["cypress", "@testing-library/cypress"]
   },
   "include": [
     "next-env.d.ts",
